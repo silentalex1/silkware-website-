@@ -1,0 +1,119 @@
+body {
+    background-color: #000000;
+    color: #EFEFEF;
+}
+
+.nav-link {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: #9CA3AF;
+    transition-property: color;
+    transition-duration: 300ms;
+    font-weight: 500;
+    position: relative;
+}
+.nav-link:hover {
+    color: #4ADE80;
+}
+.nav-link:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    right: 0;
+    background-color: #10B981;
+    transition-property: width;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    bottom: -5px;
+}
+.nav-link:hover:after {
+    width: 100%;
+    left: 0;
+}
+
+.neon-text {
+    text-shadow: 0 0 5px rgba(16, 185, 129, 0.5), 0 0 10px rgba(16, 185, 129, 0.3);
+}
+.neon-text-sub {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+.shadow-neon {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.7), 0 0 30px rgba(16, 185, 129, 0.4);
+}
+.shadow-neon-sm {
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+}
+.action-button-glow:hover {
+    box-shadow: 0 0 35px rgba(16, 185, 129, 1);
+}
+
+#roblox-logo {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #FFFFFF;
+    animation: logo-pulse 1.5s ease-in-out infinite alternate;
+    text-shadow: 0 0 25px rgba(255, 255, 255, 1), 0 0 50px rgba(255, 255, 255, 0.7); 
+}
+@keyframes logo-pulse {
+    from { transform: scale(1); opacity: 0.9; }
+    to { transform: scale(1.05); opacity: 1; }
+}
+@keyframes ping-slow {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.5); opacity: 0.1; }
+}
+@keyframes pulse-slow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
+}
+.animate-ping-slow {
+    animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.animate-pulse-slow {
+    animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+
+.header-title {
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.faq-card {
+    padding: 1.5rem;
+    background-color: rgba(17, 24, 39, 0.7);
+    border-radius: 1rem;
+    border-left-width: 4px;
+    border-left-color: #059669;
+    transition-property: all;
+    transition-duration: 300ms;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+.faq-card:hover {
+    border-left-width: 8px;
+    background-color: rgba(31, 41, 55, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
+}
+
+/* FIX: Changed from image to clean CSS gradient background */
+.application-bg {
+    background-image: linear-gradient(to bottom, #000000, #000000); 
+    background-size: cover;
+    background-position: center;
+    filter: none;
+    transition: filter 0.5s ease;
+}
+
+.checkpoint-container {
+    background-color: #080808;
+    border: 1px solid #1a1a1a;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+}
+.checkpoint-title {
+    background-image: linear-gradient(to right, #10B981, #34D399, #F5F5F5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
