@@ -1,111 +1,63 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loadingScreen = document.getElementById('loading-screen');
-    const robloxLogo = document.getElementById('roblox-logo');
-    const silkwireText = document.getElementById('silkwire-text');
-    const mainContent = document.getElementById('main-content');
-    const dynamicTextWords = document.getElementById('dynamic-text-words');
-    const dynamicTextBox = document.getElementById('dynamic-text-box');
-    const faqSection = document.getElementById('faq-section');
-    const aboutBtn = document.getElementById('about-btn');
-    const aboutModal = document.getElementById('about-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-
-    const startLoadingAnimation = () => {
-        if (!loadingScreen) return;
-
-        robloxLogo.style.transform = 'translateY(0) scale(1)';
-
-        setTimeout(() => {
-            robloxLogo.style.transform = 'translateX(22rem) translateY(0) scale(0.6)'; 
-            robloxLogo.style.opacity = '1';
-            silkwireText.style.opacity = '1';
-        }, 100); 
-
-        setTimeout(() => {
-            loadingScreen.style.opacity = '0';
-            if (mainContent) mainContent.style.opacity = '1';
-            if (dynamicTextWords) startDynamicText();
-        }, 1500); 
-
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 2500); 
-    };
-
-    const words = [
-        "Best Stable",
-        "Best Smooth",
-        "Best Fast",
-        "Best Powerful",
-        "Best Undetected",
-        "Best Reliable"
-    ];
-    let wordIndex = 0;
-
-    const updateDynamicText = () => {
-        if (!dynamicTextWords) return;
-
-        const currentWord = words[wordIndex];
-        
-        dynamicTextWords.style.opacity = '0';
-        dynamicTextBox.style.transform = 'scale(0.8) skewX(5deg)';
-        
-        setTimeout(() => {
-            dynamicTextWords.textContent = currentWord;
-            
-            const estimatedWidth = currentWord.length * (window.innerWidth < 768 ? 40 : 50) + 20; 
-            dynamicTextBox.style.width = `${estimatedWidth}px`;
-            
-            setTimeout(() => {
-                dynamicTextBox.style.transform = 'scale(1) skewX(0deg)';
-                dynamicTextWords.style.opacity = '1';
-            }, 50);
-
-            wordIndex = (wordIndex + 1) % words.length;
-        }, 500); 
-    };
-
-    const startDynamicText = () => {
-        updateDynamicText(); 
-        setInterval(updateDynamicText, 2800); 
-    }
-
-    const handleScroll = () => {
-        if (!faqSection) return;
-
-        const scrollPosition = window.scrollY;
-        const sectionPosition = faqSection.offsetTop;
-        const triggerPoint = sectionPosition - (window.innerHeight / 1.3);
-
-        if (scrollPosition > triggerPoint) {
-            faqSection.style.opacity = '1';
-            faqSection.style.transform = 'translateY(0)';
-        } else {
-            faqSection.style.opacity = '0';
-            faqSection.style.transform = 'translateY(10px)';
-        }
-    };
-    
-    if (faqSection) {
-        window.addEventListener('scroll', handleScroll);
-    }
-
-    if (aboutBtn && aboutModal && closeModalBtn) {
-        aboutBtn.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            aboutModal.classList.remove('hidden');
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            aboutModal.classList.add('hidden');
-        });
-
-        aboutModal.addEventListener('click', (e) => {
-            if (e.target === aboutModal) {
-                aboutModal.classList.add('hidden');
-            }
-        });
-    }
-
-    startLoadingAnimation();
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        document.getElementById('loading-screen').classList.add('hidden');
+    }, 1500);
 });
+
+var words = ['Stable', 'Smooth', 'Fast', 'Powerful', 'Reliable', 'Undetected'];
+var currentIndex = 0;
+var wordElement = document.getElementById('changing-word');
+
+function updateWord() {
+    wordElement.style.opacity = '0';
+    wordElement.style.transform = 'translateY(-10px) scale(0.95)';
+    
+    setTimeout(function() {
+        currentIndex = (currentIndex + 1) % words.length;
+        wordElement.textContent = words[currentIndex];
+        wordElement.style.opacity = '1';
+        wordElement.style.transform = 'translateY(0) scale(1)';
+    }, 300);
+}
+
+setInterval(updateWord, 3500);
+
+var faqSection = document.getElementById('faq');
+var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+observer.observe(faqSection);
+
+var navbar = document.getElementById('navbar');
+window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 40) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+function toggleFaq(element) {
+    var wasActive = element.classList.contains('active');
+    var items = document.querySelectorAll('.faq-item');
+    for (var i = 0; i < items.length; i++) {
+        items[i].classList.remove('active');
+    }
+    if (!wasActive) {
+        element.classList.add('active');
+    }
+}
+
+function goToCheckpoint() {
+    window.location.href = '/checkpoint-1';
+}
+
+function showAbout() {
+    document.getElementById('about-modal').classList.add('active');
+}
