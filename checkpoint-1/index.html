@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkpoint 1</title>
-    <link rel="icon" type="image/png" href="/silkwarelogo.png">
+    <link rel="icon" type="image/png" href="../silkwarelogo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/checkpoint.css">
+    <link rel="stylesheet" href="checkpoint.css">
 </head>
 <body>
     <div class="cursor-glow" id="cursor-glow"></div>
 
-    <div id="loading-screen">
-        <div class="loader-spinner"></div>
-    </div>
-
     <nav class="glass-nav">
-        <button onclick="window.location.href='/'" class="back-btn">
+        <button onclick="window.location.href='../index.html'" class="back-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
@@ -24,15 +20,20 @@
         </button>
         
         <div class="nav-brand-center">
-            <img src="/silkwarelogo.png" alt="Silkware">
+            <img src="../silkwarelogo.png" alt="Silkware">
             <span>Silkware</span>
         </div>
         
-        <div class="nav-placeholder"></div>
+        <button class="keys-btn" onclick="toggleKeysModal()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+            </svg>
+            <span>Your Freemium Keys</span>
+        </button>
     </nav>
 
     <div class="checkpoint-wrapper">
-        <div class="checkpoint-box">
+        <div class="checkpoint-box" id="main-box">
             <div class="box-glow"></div>
             
             <div class="cp-header">
@@ -67,7 +68,7 @@
             </div>
         </div>
 
-        <div class="help-text">
+        <div class="help-text" id="help-text">
             <h3>Instructions</h3>
             <div class="step-list">
                 <div class="step-item">
@@ -89,6 +90,36 @@
         </div>
     </div>
 
-    <script src="/checkpoint.js"></script>
+    <div id="key-overlay" class="overlay hidden">
+        <div class="key-modal">
+            <div class="box-glow"></div>
+            <h2>Key Generated Successfully</h2>
+            <p>Here is your 24-hour access key.</p>
+            
+            <div class="key-display" onmouseenter="copyKey()" id="key-box">
+                <span class="key-text" id="generated-key">LOADING...</span>
+                <span class="copy-hint">Copied to clipboard!</span>
+            </div>
+
+            <div class="key-actions">
+                <button class="save-btn" onclick="saveKeyToSite()">Save key to site</button>
+                <button class="close-btn-modal" onclick="closeKeyUI()">Close key ui</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="saved-keys-overlay" class="overlay hidden">
+        <div class="saved-keys-modal">
+            <div class="modal-header">
+                <h2>Your Freemium Keys</h2>
+                <button onclick="toggleKeysModal()" class="icon-close">✕</button>
+            </div>
+            <div class="keys-list" id="keys-list">
+                <p class="no-keys">No active keys found.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="checkpoint.js"></script>
 </body>
 </html>
