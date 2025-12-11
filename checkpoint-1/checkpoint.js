@@ -24,7 +24,9 @@ var links = {
 
 var ui = {
     title: document.getElementById('cp-title'),
+    stepNum: document.getElementById('step-number'),
     btn: document.getElementById('action-btn'),
+    btnText: document.querySelector('#action-btn span'),
     bar: document.getElementById('progress-fill'),
     barText: document.getElementById('progress-text'),
     percent: document.getElementById('percent-text'),
@@ -36,23 +38,25 @@ function updateUI() {
     ui.error.classList.add('hidden');
     
     if (currentStep > 3) {
-        document.title = "Completed";
+        document.title = "Silkware - Ready";
         ui.title.textContent = "Download Ready";
-        ui.btn.textContent = "Download Silkware";
-        ui.btn.onclick = function() { alert("Starting download for v1.0..."); };
+        ui.stepNum.textContent = "3";
+        ui.btnText.textContent = "Download Silkware";
+        ui.btn.onclick = function() { alert("Download started for v1.0"); };
         ui.bar.style.width = "100%";
-        ui.barText.textContent = "All checkpoints finished";
+        ui.barText.textContent = "Process Complete";
         ui.percent.textContent = "100%";
         return;
     }
 
     document.title = "Checkpoint " + currentStep;
     ui.title.textContent = "Checkpoint " + currentStep;
-    ui.barText.textContent = "at checkpoint-" + currentStep;
+    ui.stepNum.textContent = currentStep;
+    ui.barText.textContent = "Waiting for action...";
     
     var width = "0%";
-    if (currentStep === 1) width = "20%";
-    if (currentStep === 2) width = "50%";
+    if (currentStep === 1) width = "10%";
+    if (currentStep === 2) width = "45%";
     if (currentStep === 3) width = "80%";
     
     ui.bar.style.width = width;
@@ -60,10 +64,7 @@ function updateUI() {
 }
 
 function handleAction() {
-    if (isChecking) {
-        setNextStep();
-        return;
-    }
+    if (isChecking) return;
 
     var link = links[currentStep];
     window.open(link, '_blank');
@@ -76,23 +77,29 @@ function handleAction() {
 function setNextStep() {
     currentStep++;
     isChecking = false;
-    ui.btn.textContent = "Get key here";
+    ui.btnText.textContent = "Get Key Here";
     updateUI();
 }
 
 function setReadyState() {
     ui.loader.classList.add('hidden');
     
+    // Animate to next step
     if (currentStep < 3) {
-        ui.btn.textContent = "Checkpoint " + (currentStep + 1);
-        ui.barText.textContent = "ready for checkpoint " + (currentStep + 1);
-        ui.bar.style.width = (currentStep === 1 ? "40%" : "70%");
-        ui.percent.textContent = (currentStep === 1 ? "40%" : "70%");
+        ui.btnText.textContent = "Continue to Checkpoint " + (currentStep + 1);
+        ui.barText.textContent = "Verification Successful";
+        ui.bar.style.width = (currentStep === 1 ? "40%" : "75%");
+        ui.btn.onclick = function() {
+            ui.btn.onclick = handleAction; 
+            setNextStep();
+        };
     } else {
-        ui.btn.textContent = "Finish";
-        ui.barText.textContent = "ready to finish";
-        ui.bar.style.width = "100%";
-        ui.percent.textContent = "100%";
+        ui.btnText.textContent = "Finish & Download";
+        ui.barText.textContent = "All Systems Go";
+        ui.bar.style.width = "95%";
+        ui.btn.onclick = function() {
+            setNextStep();
+        };
     }
 }
 
@@ -101,6 +108,7 @@ window.addEventListener('focus', function() {
 
     ui.error.classList.add('hidden');
     ui.loader.classList.remove('hidden');
+    ui.barText.textContent = "Verifying...";
 
     setTimeout(function() {
         var timePassed = Date.now() - clickTime;
@@ -110,9 +118,10 @@ window.addEventListener('focus', function() {
         } else {
             ui.loader.classList.add('hidden');
             ui.error.classList.remove('hidden');
+            ui.barText.textContent = "Verification Failed";
             isChecking = false; 
         }
-    }, 2000); 
+    }, 2500); 
 });
 
 updateUI();
