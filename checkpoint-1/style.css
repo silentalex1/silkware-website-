@@ -28,20 +28,14 @@ body {
 body::before {
     content: '';
     position: fixed;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(0, 255, 85, 0.06) 0%, transparent 70%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0, 255, 85, 0.06) 0%, transparent 60%);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
     pointer-events: none;
-    animation: pulseGlow 8s ease-in-out infinite alternate;
-}
-
-@keyframes pulseGlow {
-    from { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-    to { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 #loading-screen {
@@ -78,9 +72,9 @@ body::before {
     justify-content: space-between;
     align-items: center;
     backdrop-filter: blur(12px);
+    background: rgba(5, 5, 5, 0.5);
     border-bottom: 1px solid var(--border-light);
     z-index: 100;
-    background: rgba(5, 5, 5, 0.4);
 }
 
 .nav-logo {
@@ -119,42 +113,41 @@ body::before {
 }
 
 .checkpoint-card {
-    background: linear-gradient(180deg, rgba(20, 20, 22, 0.6) 0%, rgba(10, 10, 12, 0.9) 100%);
-    backdrop-filter: blur(20px);
+    position: relative;
+    background: var(--card-dark);
     border: 1px solid var(--border-light);
     width: 100%;
     max-width: 440px;
     padding: 45px 35px;
     border-radius: 24px;
     text-align: center;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-    animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
 }
 
-.checkpoint-card::after {
-    content: '';
+.card-glow {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    opacity: 0.5;
 }
 
 h1 {
     font-size: 32px;
     font-weight: 800;
-    margin-bottom: 12px;
-    letter-spacing: -1.5px;
-    background: linear-gradient(180deg, #fff, #aaa);
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+    background: linear-gradient(to bottom, #fff, #ccc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .status-container {
-    height: 30px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -166,7 +159,7 @@ h1 {
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .status-text.error {
@@ -189,7 +182,7 @@ h1 {
 
 .glow-button {
     width: 100%;
-    background: linear-gradient(135deg, var(--primary) 0%, #00cc44 100%);
+    background: var(--primary);
     color: #000;
     border: none;
     padding: 18px;
@@ -197,16 +190,16 @@ h1 {
     font-weight: 700;
     font-size: 16px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     margin-bottom: 40px;
-    box-shadow: 0 0 20px rgba(0, 255, 85, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 255, 85, 0.2);
     position: relative;
     overflow: hidden;
 }
 
 .glow-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(0, 255, 85, 0.3);
+    box-shadow: 0 8px 30px rgba(0, 255, 85, 0.3);
 }
 
 .glow-button:active {
@@ -222,47 +215,69 @@ h1 {
 .progress-track {
     width: 100%;
     height: 6px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 10px;
     overflow: hidden;
 }
 
 .progress-bar {
-    width: 33%;
+    width: 0%;
     height: 100%;
     background: var(--primary);
     border-radius: 10px;
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 0 15px var(--primary);
 }
 
-#progress-text {
-    color: var(--text-gray);
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
     font-size: 12px;
     font-weight: 500;
+    color: var(--text-gray);
+}
+
+#progress-text {
     text-transform: lowercase;
-    opacity: 0.7;
 }
 
 .instruction-text {
     margin-top: 50px;
     text-align: center;
     color: var(--text-gray);
-    font-size: 14px;
-    line-height: 1.8;
     opacity: 0;
-    animation: fadeIn 0.8s ease forwards 0.4s;
+    animation: fadeIn 0.8s ease forwards 0.3s;
 }
 
 .instruction-text h3 {
     color: var(--text-white);
-    font-size: 15px;
-    margin-bottom: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.step-line {
+    width: 20px;
+    height: 1px;
+    background: var(--border-light);
 }
 
 .highlight-text {
     color: var(--primary);
     font-weight: 600;
+}
+
+.sub-hint {
+    font-size: 13px;
+    opacity: 0.6;
 }
 
 .hidden {
@@ -276,12 +291,4 @@ h1 {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-4px); }
     75% { transform: translateX(4px); }
-}
-
-@media (max-width: 480px) {
-    .checkpoint-card {
-        padding: 30px 20px;
-        max-width: 90%;
-    }
-    .hero h1 { font-size: 36px; }
 }
