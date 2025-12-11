@@ -1,109 +1,101 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loadingScreen = document.getElementById('loading-screen');
-    const robloxLogo = document.getElementById('roblox-logo');
-    const silkwireText = document.getElementById('silkwire-text');
-    const mainContent = document.getElementById('main-content');
-    const dynamicTextWords = document.getElementById('dynamic-text-words');
-    const dynamicTextBox = document.getElementById('dynamic-text-box');
-    const faqSection = document.getElementById('faq-section');
-    const aboutBtn = document.getElementById('about-btn');
-    const aboutModal = document.getElementById('about-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-
-    const startLoadingAnimation = () => {
-        if (!loadingScreen) return;
-
-        robloxLogo.style.transform = 'translateY(0) scale(1)';
-
-        setTimeout(() => {
-            robloxLogo.style.transform = 'translateX(22rem) translateY(0) scale(0.6)'; 
-            robloxLogo.style.opacity = '1';
-            silkwireText.style.opacity = '1';
-        }, 100); 
-
-        setTimeout(() => {
-            loadingScreen.style.opacity = '0';
-            if (mainContent) mainContent.style.opacity = '1';
-            if (dynamicTextWords) startDynamicText();
-        }, 1500); 
-
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 2500); 
-    };
-
-    const words = [
-        "Best Stable",
-        "Best Smooth",
-        "Best Fast",
-        "Best Powerful",
-        "Best Undetected",
-        "Best Reliable"
-    ];
-    let wordIndex = 0;
-
-    const updateDynamicText = () => {
-        const currentWord = words[wordIndex];
-        
-        dynamicTextWords.style.opacity = '0';
-        dynamicTextBox.style.transform = 'scale(0.8) skewX(5deg)';
-        
-        setTimeout(() => {
-            dynamicTextWords.textContent = currentWord;
-            
-            const estimatedWidth = currentWord.length * (window.innerWidth < 768 ? 40 : 50) + 20; 
-            dynamicTextBox.style.width = `${estimatedWidth}px`;
-            
-            setTimeout(() => {
-                dynamicTextBox.style.transform = 'scale(1) skewX(0deg)';
-                dynamicTextWords.style.opacity = '1';
-            }, 50);
-
-            wordIndex = (wordIndex + 1) % words.length;
-        }, 500); 
-    };
-
-    const startDynamicText = () => {
-        updateDynamicText(); 
-        setInterval(updateDynamicText, 2800); 
-    }
-
-    const handleScroll = () => {
-        if (!faqSection) return;
-
-        const scrollPosition = window.scrollY;
-        const sectionPosition = faqSection.offsetTop;
-        const triggerPoint = sectionPosition - (window.innerHeight / 1.3);
-
-        if (scrollPosition > triggerPoint) {
-            faqSection.style.opacity = '1';
-            faqSection.style.transform = 'translateY(0)';
-        } else {
-            faqSection.style.opacity = '0';
-            faqSection.style.transform = 'translateY(10px)';
-        }
-    };
-    
-    if (faqSection) {
-        window.addEventListener('scroll', handleScroll);
-    }
-
-    if (aboutBtn && aboutModal && closeModalBtn) {
-        aboutBtn.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            aboutModal.classList.remove('hidden');
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            aboutModal.classList.add('hidden');
-        });
-
-        aboutModal.addEventListener('click', (e) => {
-            if (e.target === aboutModal) {
-                aboutModal.classList.add('hidden');
-            }
-        });
-    }
-
-    startLoadingAnimation();
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        document.getElementById('loading-screen').classList.add('hidden');
+    }, 800);
 });
+
+var currentStep = 1;
+var isChecking = false;
+var clickTime = 0;
+
+var links = {
+    1: "https://work.ink/27Tr/ypomvhuy",
+    2: "https://work.ink/27Tr/checkpoint-02",
+    3: "https://work.ink/27Tr/ffft3jcz"
+};
+
+var ui = {
+    title: document.getElementById('cp-title'),
+    btn: document.getElementById('action-btn'),
+    bar: document.getElementById('progress-fill'),
+    barText: document.getElementById('progress-text'),
+    error: document.getElementById('error-msg'),
+    loader: document.getElementById('verify-loader')
+};
+
+function updateUI() {
+    ui.error.classList.add('hidden');
+    
+    if (currentStep > 3) {
+        document.title = "Completed";
+        ui.title.textContent = "Download Ready";
+        ui.btn.textContent = "Download Executor";
+        ui.btn.onclick = function() { alert("Download started!"); };
+        ui.bar.style.width = "100%";
+        ui.barText.textContent = "All checkpoints finished";
+        return;
+    }
+
+    document.title = "Checkpoint " + currentStep;
+    ui.title.textContent = "Checkpoint " + currentStep;
+    ui.barText.textContent = "at checkpoint-" + currentStep;
+    
+    if (currentStep === 1) ui.bar.style.width = "20%";
+    if (currentStep === 2) ui.bar.style.width = "50%";
+    if (currentStep === 3) ui.bar.style.width = "80%";
+}
+
+function handleAction() {
+    if (isChecking) {
+        setNextStep();
+        return;
+    }
+
+    var link = links[currentStep];
+    window.open(link, '_blank');
+    clickTime = Date.now();
+    isChecking = true;
+    ui.error.classList.add('hidden');
+}
+
+function setNextStep() {
+    currentStep++;
+    isChecking = false;
+    ui.btn.textContent = "Get key here";
+    updateUI();
+}
+
+function setReadyState() {
+    ui.loader.classList.add('hidden');
+    
+    if (currentStep < 3) {
+        ui.btn.textContent = "Checkpoint " + (currentStep + 1);
+        ui.barText.textContent = "ready for checkpoint " + (currentStep + 1);
+        ui.bar.style.width = (currentStep === 1 ? "40%" : "70%");
+    } else {
+        ui.btn.textContent = "Finish";
+        ui.barText.textContent = "ready to finish";
+        ui.bar.style.width = "100%";
+    }
+}
+
+window.addEventListener('focus', function() {
+    if (!isChecking) return;
+
+    ui.error.classList.add('hidden');
+    ui.loader.classList.remove('hidden');
+
+    setTimeout(function() {
+        var timePassed = Date.now() - clickTime;
+        
+        if (timePassed > 6000) {
+            setReadyState();
+        } else {
+            ui.loader.classList.add('hidden');
+            ui.error.classList.remove('hidden');
+            isChecking = false; 
+        }
+    }, 2500); 
+});
+
+updateUI();
