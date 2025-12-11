@@ -1,23 +1,27 @@
 window.addEventListener('load', function() {
     setTimeout(function() {
-        document.getElementById('loading-screen').classList.add('hidden');
+        var loader = document.getElementById('loading-screen');
+        if(loader) loader.classList.add('hidden');
     }, 1000);
 });
 
 var navbar = document.getElementById('navbar');
-window.addEventListener('scroll', function() {
-    if (window.scrollY > 20) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
+if(navbar) {
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 20) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+}
 
 var words = ['Stable', 'Smooth', 'Fast', 'Safe'];
 var wordIndex = 0;
 var wordElement = document.getElementById('changing-word');
 
 function changeWord() {
+    if(!wordElement) return;
     wordElement.style.opacity = '0';
     wordElement.style.transform = 'translateY(10px)';
     
@@ -29,7 +33,7 @@ function changeWord() {
     }, 200);
 }
 
-setInterval(changeWord, 3000);
+if(wordElement) setInterval(changeWord, 3000);
 
 function toggleFaq(card) {
     const allCards = document.querySelectorAll('.faq-card');
@@ -42,7 +46,7 @@ function toggleFaq(card) {
 }
 
 function goToCheckpoint() {
-    window.location.href = '/checkpoint-1';
+    window.location.href = 'checkpoint.html';
 }
 
 function showAbout() {
