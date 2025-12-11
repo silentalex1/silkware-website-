@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silkware</title>
+    <title>Silkware - Best Keyless Executor</title>
     <link rel="icon" type="image/png" href="silkwarelogo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -30,74 +30,57 @@
         </div>
     </nav>
 
-    <main class="hero-container">
+    <div class="main-container">
         <div class="status-badge">
             <div class="status-dot"></div>
-            <span>v2.0 Updated & Safe</span>
+            <span>Version 1.0 Updated</span>
         </div>
 
-        <h1 class="hero-title">
-            Redefining <span id="changing-word" class="highlight-text">Execution</span>
-        </h1>
-        
-        <p class="hero-desc">
-            Silkware provides the most stable and undetectable experience for Roblox. 
-            Powerful, lightweight, and completely keyless options available.
-        </p>
+        <section class="hero">
+            <h1 class="hero-title">
+                Silkware: The <span id="changing-word" class="highlight-text">Stable</span><br>
+                Execution Platform
+            </h1>
+            
+            <p class="hero-desc">
+                Experience the best safe, undetected executor. Silkware outperforms any others for Roblox.
+            </p>
 
-        <div class="cta-group">
-            <button class="primary-btn" onclick="goToCheckpoint()">
-                <span>Download Now</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                </svg>
-            </button>
-            <button class="secondary-btn" onclick="scrollToFaq()">
-                Learn More
-            </button>
-        </div>
-    </main>
+            <div class="cta-group">
+                <button class="primary-btn" onclick="goToCheckpoint()">Download Silkware</button>
+                <button class="secondary-btn" onclick="scrollToFaq()">Read FAQ</button>
+            </div>
+        </section>
 
-    <section id="faq" class="faq-section">
-        <h2 class="section-title">Common Questions</h2>
-        
-        <div class="faq-grid">
+        <section id="faq" class="faq-section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            
             <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-head">
-                    <span>What API do you use?</span>
-                    <span class="faq-icon">+</span>
+                    <span>API Information (sUNC / UNC)</span>
+                    <span class="faq-arrow">▼</span>
                 </div>
                 <div class="faq-content">
-                    We utilize a high-performance custom API based on 95% UNC standards, ensuring maximum script compatibility and stability.
+                    We currently use the 95 UNC Based Xeno Module Quorum API. We are planning our own custom API soon for even better performance.
                 </div>
             </div>
 
             <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-head">
-                    <span>Is it safe?</span>
-                    <span class="faq-icon">+</span>
+                    <span>Official Discord Server</span>
+                    <span class="faq-arrow">▼</span>
                 </div>
                 <div class="faq-content">
-                    Yes. Silkware is designed with security in mind, featuring advanced anti-tamper protections to keep your account safe.
+                    Join our official community for support and updates: <a href="https://discord.gg/pQpFTTiP" target="_blank">Click to Join</a>
                 </div>
             </div>
-
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-head">
-                    <span>Discord Server</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-content">
-                    Join our community for scripts, support, and updates: <a href="https://discord.gg/pQpFTTiP" target="_blank">Join Discord</a>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <div id="about-modal" class="modal" onclick="this.classList.remove('active')">
         <div class="modal-card" onclick="event.stopPropagation()">
             <h3>About Silkware</h3>
-            <p>This section is currently under development. Check back soon.</p>
+            <p>Section In Development. This part of the website is currently being worked on for a future update.</p>
             <button class="close-btn" onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
         </div>
     </div>
