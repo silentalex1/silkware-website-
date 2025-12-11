@@ -19,6 +19,7 @@ var ui = {
     btn: document.getElementById('action-btn'),
     bar: document.getElementById('progress-fill'),
     barText: document.getElementById('progress-text'),
+    percent: document.getElementById('percent-text'),
     error: document.getElementById('error-msg'),
     loader: document.getElementById('verify-loader')
 };
@@ -33,6 +34,7 @@ function updateUI() {
         ui.btn.onclick = function() { alert("Download started!"); };
         ui.bar.style.width = "100%";
         ui.barText.textContent = "All checkpoints finished";
+        ui.percent.textContent = "100%";
         return;
     }
 
@@ -40,9 +42,13 @@ function updateUI() {
     ui.title.textContent = "Checkpoint " + currentStep;
     ui.barText.textContent = "at checkpoint-" + currentStep;
     
-    if (currentStep === 1) ui.bar.style.width = "20%";
-    if (currentStep === 2) ui.bar.style.width = "50%";
-    if (currentStep === 3) ui.bar.style.width = "80%";
+    var width = "0%";
+    if (currentStep === 1) width = "20%";
+    if (currentStep === 2) width = "50%";
+    if (currentStep === 3) width = "80%";
+    
+    ui.bar.style.width = width;
+    ui.percent.textContent = width;
 }
 
 function handleAction() {
@@ -73,10 +79,12 @@ function setReadyState() {
         ui.btn.textContent = "Checkpoint " + (currentStep + 1);
         ui.barText.textContent = "ready for checkpoint " + (currentStep + 1);
         ui.bar.style.width = (currentStep === 1 ? "40%" : "70%");
+        ui.percent.textContent = (currentStep === 1 ? "40%" : "70%");
     } else {
         ui.btn.textContent = "Finish";
         ui.barText.textContent = "ready to finish";
         ui.bar.style.width = "100%";
+        ui.percent.textContent = "100%";
     }
 }
 
