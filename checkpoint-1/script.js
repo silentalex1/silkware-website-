@@ -1,7 +1,7 @@
 window.addEventListener('load', function() {
     setTimeout(function() {
         document.getElementById('loading-screen').classList.add('hidden');
-    }, 800);
+    }, 600);
 });
 
 var currentStep = 1;
@@ -53,6 +53,7 @@ function handleAction() {
 
     var link = links[currentStep];
     window.open(link, '_blank');
+    
     clickTime = Date.now();
     isChecking = true;
     ui.error.classList.add('hidden');
@@ -95,7 +96,7 @@ window.addEventListener('focus', function() {
             ui.error.classList.remove('hidden');
             isChecking = false; 
         }
-    }, 2500); 
+    }, 2000); 
 });
 
 updateUI();
