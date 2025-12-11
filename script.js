@@ -6,20 +6,19 @@ window.addEventListener('load', function() {
 
 var navbar = document.getElementById('navbar');
 window.addEventListener('scroll', function() {
-    if (window.scrollY > 30) {
+    if (window.scrollY > 20) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
 });
 
-var words = ['Execution', 'Performance', 'Stability', 'Quality'];
+var words = ['Stable', 'Smooth', 'Fast', 'Safe'];
 var wordIndex = 0;
 var wordElement = document.getElementById('changing-word');
 
 function changeWord() {
-    if(!wordElement) return;
-    
+    if (!wordElement) return;
     wordElement.style.opacity = '0';
     wordElement.style.transform = 'translateY(10px)';
     
@@ -34,14 +33,12 @@ function changeWord() {
 setInterval(changeWord, 3000);
 
 function toggleFaq(item) {
-    const allItems = document.querySelectorAll('.faq-item');
-    
+    var allItems = document.querySelectorAll('.faq-item');
     if (item.classList.contains('active')) {
         item.classList.remove('active');
         return;
     }
-
-    allItems.forEach(i => i.classList.remove('active'));
+    allItems.forEach(function(i) { i.classList.remove('active'); });
     item.classList.add('active');
 }
 
@@ -54,7 +51,5 @@ function showAbout() {
 }
 
 function scrollToFaq() {
-    document.getElementById('faq').scrollIntoView({ 
-        behavior: 'smooth' 
-    });
+    document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });
 }
