@@ -1,111 +1,60 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loadingScreen = document.getElementById('loading-screen');
-    const robloxLogo = document.getElementById('roblox-logo');
-    const silkwireText = document.getElementById('silkwire-text');
-    const mainContent = document.getElementById('main-content');
-    const dynamicTextWords = document.getElementById('dynamic-text-words');
-    const dynamicTextBox = document.getElementById('dynamic-text-box');
-    const faqSection = document.getElementById('faq-section');
-    const aboutBtn = document.getElementById('about-btn');
-    const aboutModal = document.getElementById('about-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkpoint 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading...</div>
+        </div>
+    </div>
 
-    const startLoadingAnimation = () => {
-        if (!loadingScreen) return;
+    <nav id="navbar">
+        <div class="nav-brand">
+            <img src="silkwareani.png" alt="Silkware">
+            <span>Silkware</span>
+        </div>
+        <div class="nav-links">
+            <button onclick="window.location.href='index.html'">Home</button>
+        </div>
+    </nav>
 
-        robloxLogo.style.transform = 'translateY(0) scale(1)';
-
-        setTimeout(() => {
-            robloxLogo.style.transform = 'translateX(22rem) translateY(0) scale(0.6)'; 
-            robloxLogo.style.opacity = '1';
-            silkwireText.style.opacity = '1';
-        }, 100); 
-
-        setTimeout(() => {
-            loadingScreen.style.opacity = '0';
-            if (mainContent) mainContent.style.opacity = '1';
-            if (dynamicTextWords) startDynamicText();
-        }, 1500); 
-
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 2500); 
-    };
-
-    const words = [
-        "Best Stable",
-        "Best Smooth",
-        "Best Fast",
-        "Best Powerful",
-        "Best Undetected",
-        "Best Reliable"
-    ];
-    let wordIndex = 0;
-
-    const updateDynamicText = () => {
-        if (!dynamicTextWords) return;
-
-        const currentWord = words[wordIndex];
-        
-        dynamicTextWords.style.opacity = '0';
-        dynamicTextBox.style.transform = 'scale(0.8) skewX(5deg)';
-        
-        setTimeout(() => {
-            dynamicTextWords.textContent = currentWord;
+    <div class="checkpoint-container">
+        <div class="checkpoint-card">
+            <h1 id="cp-title">Checkpoint 1</h1>
             
-            const estimatedWidth = currentWord.length * (window.innerWidth < 768 ? 40 : 50) + 20; 
-            dynamicTextBox.style.width = `${estimatedWidth}px`;
-            
-            setTimeout(() => {
-                dynamicTextBox.style.transform = 'scale(1) skewX(0deg)';
-                dynamicTextWords.style.opacity = '1';
-            }, 50);
+            <div id="status-area">
+                <p id="error-msg" class="error-text hidden">Did you do the key system?</p>
+                <div id="verify-loader" class="hidden">
+                    <div class="mini-spinner"></div>
+                    <span>User is doing key sys...</span>
+                </div>
+            </div>
 
-            wordIndex = (wordIndex + 1) % words.length;
-        }, 500); 
-    };
+            <button id="action-btn" class="btn-primary full-width" onclick="handleAction()">Get key here</button>
 
-    const startDynamicText = () => {
-        updateDynamicText(); 
-        setInterval(updateDynamicText, 2800); 
-    }
+            <div class="progress-section">
+                <div class="progress-bar-bg">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <span id="progress-text">at checkpoint-1</span>
+            </div>
+        </div>
 
-    const handleScroll = () => {
-        if (!faqSection) return;
+        <div class="instructions">
+            <h3>How to do the key system:</h3>
+            <p>Click --> get key <--</p>
+            <p>Do the keysystem checkpoints</p>
+            <p>That simple cmon now :></p>
+        </div>
+    </div>
 
-        const scrollPosition = window.scrollY;
-        const sectionPosition = faqSection.offsetTop;
-        const triggerPoint = sectionPosition - (window.innerHeight / 1.3);
-
-        if (scrollPosition > triggerPoint) {
-            faqSection.style.opacity = '1';
-            faqSection.style.transform = 'translateY(0)';
-        } else {
-            faqSection.style.opacity = '0';
-            faqSection.style.transform = 'translateY(10px)';
-        }
-    };
-    
-    if (faqSection) {
-        window.addEventListener('scroll', handleScroll);
-    }
-
-    if (aboutBtn && aboutModal && closeModalBtn) {
-        aboutBtn.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            aboutModal.classList.remove('hidden');
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            aboutModal.classList.add('hidden');
-        });
-
-        aboutModal.addEventListener('click', (e) => {
-            if (e.target === aboutModal) {
-                aboutModal.classList.add('hidden');
-            }
-        });
-    }
-
-    startLoadingAnimation();
-});
+    <script src="checkpoint.js"></script>
+</body>
+</html>
