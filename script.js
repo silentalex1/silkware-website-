@@ -1,27 +1,25 @@
 window.addEventListener('load', function() {
     setTimeout(function() {
-        var loader = document.getElementById('loading-screen');
-        if(loader) loader.classList.add('hidden');
-    }, 1000);
+        document.getElementById('loading-screen').classList.add('hidden');
+    }, 1200);
 });
 
 var navbar = document.getElementById('navbar');
-if(navbar) {
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 20) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-}
+window.addEventListener('scroll', function() {
+    if (window.scrollY > 30) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
 
-var words = ['Stable', 'Smooth', 'Fast', 'Safe'];
+var words = ['Execution', 'Performance', 'Stability', 'Quality'];
 var wordIndex = 0;
 var wordElement = document.getElementById('changing-word');
 
 function changeWord() {
     if(!wordElement) return;
+    
     wordElement.style.opacity = '0';
     wordElement.style.transform = 'translateY(10px)';
     
@@ -33,22 +31,30 @@ function changeWord() {
     }, 200);
 }
 
-if(wordElement) setInterval(changeWord, 3000);
+setInterval(changeWord, 3000);
 
-function toggleFaq(card) {
-    const allCards = document.querySelectorAll('.faq-card');
+function toggleFaq(item) {
+    const allItems = document.querySelectorAll('.faq-item');
     
-    allCards.forEach(c => {
-        if (c !== card) c.classList.remove('active');
-    });
-    
-    card.classList.toggle('active');
+    if (item.classList.contains('active')) {
+        item.classList.remove('active');
+        return;
+    }
+
+    allItems.forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
 }
 
 function goToCheckpoint() {
-    window.location.href = 'checkpoint.html';
+    window.location.href = '/checkpoint-1';
 }
 
 function showAbout() {
     document.getElementById('about-modal').classList.add('active');
+}
+
+function scrollToFaq() {
+    document.getElementById('faq').scrollIntoView({ 
+        behavior: 'smooth' 
+    });
 }
