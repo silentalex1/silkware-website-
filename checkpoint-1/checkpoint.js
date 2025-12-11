@@ -1,9 +1,3 @@
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        document.getElementById('loading-screen').classList.add('hidden');
-    }, 800);
-});
-
 document.addEventListener('mousemove', function(e) {
     var cursor = document.getElementById('cursor-glow');
     if (cursor) {
@@ -15,6 +9,7 @@ document.addEventListener('mousemove', function(e) {
 var currentStep = 1;
 var isChecking = false;
 var clickTime = 0;
+var generatedKey = "";
 
 var links = {
     1: "https://work.ink/27Tr/ypomvhuy",
@@ -31,21 +26,18 @@ var ui = {
     barText: document.getElementById('progress-text'),
     percent: document.getElementById('percent-text'),
     error: document.getElementById('error-msg'),
-    loader: document.getElementById('verify-loader')
+    loader: document.getElementById('verify-loader'),
+    keyOverlay: document.getElementById('key-overlay'),
+    keyDisplay: document.getElementById('generated-key'),
+    savedKeysOverlay: document.getElementById('saved-keys-overlay'),
+    keysList: document.getElementById('keys-list')
 };
 
 function updateUI() {
     ui.error.classList.add('hidden');
     
     if (currentStep > 3) {
-        document.title = "Silkware - Ready";
-        ui.title.textContent = "Download Ready";
-        ui.stepNum.textContent = "3";
-        ui.btnText.textContent = "Download Silkware";
-        ui.btn.onclick = function() { alert("Download started for v1.0"); };
-        ui.bar.style.width = "100%";
-        ui.barText.textContent = "Process Complete";
-        ui.percent.textContent = "100%";
+        showKeyGenerationUI();
         return;
     }
 
@@ -61,6 +53,7 @@ function updateUI() {
     
     ui.bar.style.width = width;
     ui.percent.textContent = width;
+    ui.btnText.textContent = "Get Key Here";
 }
 
 function handleAction() {
@@ -77,14 +70,15 @@ function handleAction() {
 function setNextStep() {
     currentStep++;
     isChecking = false;
-    ui.btnText.textContent = "Get Key Here";
+    
+    localStorage.setItem('silkware_step', currentStep);
+    
     updateUI();
 }
 
 function setReadyState() {
     ui.loader.classList.add('hidden');
     
-    // Animate to next step
     if (currentStep < 3) {
         ui.btnText.textContent = "Continue to Checkpoint " + (currentStep + 1);
         ui.barText.textContent = "Verification Successful";
@@ -94,11 +88,11 @@ function setReadyState() {
             setNextStep();
         };
     } else {
-        ui.btnText.textContent = "Finish & Download";
+        ui.btnText.textContent = "Finish & Get Key";
         ui.barText.textContent = "All Systems Go";
         ui.bar.style.width = "95%";
         ui.btn.onclick = function() {
-            setNextStep();
+            setNextStep(); 
         };
     }
 }
@@ -113,7 +107,7 @@ window.addEventListener('focus', function() {
     setTimeout(function() {
         var timePassed = Date.now() - clickTime;
         
-        if (timePassed > 6000) {
+        if (timePassed > 5000) {
             setReadyState();
         } else {
             ui.loader.classList.add('hidden');
@@ -121,7 +115,88 @@ window.addEventListener('focus', function() {
             ui.barText.textContent = "Verification Failed";
             isChecking = false; 
         }
-    }, 2500); 
+    }, 2000); 
 });
 
+function showKeyGenerationUI() {
+    if(!generatedKey) {
+        generatedKey = "SILK-" + Math.random().toString(36).substring(2, 6).toUpperCase() + "-" + Math.random().toString(36).substring(2, 6).toUpperCase();
+    }
+    
+    ui.keyDisplay.textContent = generatedKey;
+    ui.keyOverlay.classList.remove('hidden');
+}
+
+function copyKey() {
+    navigator.clipboard.writeText(generatedKey);
+}
+
+function closeKeyUI() {
+    ui.keyOverlay.classList.add('hidden');
+    ui.title.textContent = "Complete";
+    ui.btnText.textContent = "View Saved Keys";
+    ui.btn.onclick = toggleKeysModal;
+}
+
+function saveKeyToSite() {
+    var savedKeys = JSON.parse(localStorage.getItem('silkware_keys') || "[]");
+    
+    if(!savedKeys.some(k => k.key === generatedKey)) {
+        savedKeys.push({
+            key: generatedKey,
+            expiry: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+        });
+        localStorage.setItem('silkware_keys', JSON.stringify(savedKeys));
+        alert("Key saved successfully!");
+    } else {
+        alert("Key already saved.");
+    }
+}
+
+function toggleKeysModal() {
+    var modal = ui.savedKeysOverlay;
+    if (modal.classList.contains('hidden')) {
+        renderSavedKeys();
+        modal.classList.remove('hidden');
+    } else {
+        modal.classList.add('hidden');
+    }
+}
+
+function renderSavedKeys() {
+    var list = ui.keysList;
+    list.innerHTML = "";
+    
+    var savedKeys = JSON.parse(localStorage.getItem('silkware_keys') || "[]");
+    var now = Date.now();
+    
+    savedKeys = savedKeys.filter(k => k.expiry > now);
+    localStorage.setItem('silkware_keys', JSON.stringify(savedKeys));
+    
+    if (savedKeys.length === 0) {
+        list.innerHTML = '<p class="no-keys">No active keys found.</p>';
+        return;
+    }
+    
+    savedKeys.forEach(k => {
+        var timeLeft = k.expiry - now;
+        var hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        var mins = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        
+        var div = document.createElement('div');
+        div.className = 'key-item';
+        div.innerHTML = `
+            <div>
+                <span class="key-code">${k.key}</span>
+                <span class="key-timer">Expires in: ${hours}h ${mins}m</span>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+var savedStep = localStorage.getItem('silkware_step');
+if(savedStep) {
+    currentStep = parseInt(savedStep);
+}
 updateUI();
