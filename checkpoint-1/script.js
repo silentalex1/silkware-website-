@@ -1,7 +1,7 @@
 window.addEventListener('load', function() {
     setTimeout(function() {
         document.getElementById('loading-screen').classList.add('hidden');
-    }, 600);
+    }, 800);
 });
 
 var currentStep = 1;
@@ -30,8 +30,8 @@ function updateUI() {
     if (currentStep > 3) {
         document.title = "Completed";
         ui.title.textContent = "Download Ready";
-        ui.btn.textContent = "Download Executor";
-        ui.btn.onclick = function() { alert("Download started!"); };
+        ui.btn.textContent = "Download Silkware";
+        ui.btn.onclick = function() { alert("Starting download for v1.0..."); };
         ui.bar.style.width = "100%";
         ui.barText.textContent = "All checkpoints finished";
         ui.percent.textContent = "100%";
