@@ -4,78 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Silkware - best keyless executor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="loading-screen">
-        <div class="loading-container">
-            <div class="logo-loader">
-                <img src="silkwareani.png" alt="Silkware Logo">
-            </div>
-            <div class="silkware-text">Silkware</div>
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text">Silkware</div>
         </div>
     </div>
 
     <nav id="navbar">
-        <div class="nav-logo">
+        <div class="nav-brand">
             <img src="silkwareani.png" alt="Silkware">
+            <span>Silkware</span>
         </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="showAbout()">About</button>
-            <button class="nav-btn" onclick="goToCheckpoint()">Download</button>
-            <button class="nav-btn">Donate</button>
+        <div class="nav-links">
+            <button onclick="showAbout()">About</button>
+            <button onclick="goToCheckpoint()">Download</button>
+            <button class="primary" onclick="goToCheckpoint()">Get Started</button>
         </div>
     </nav>
 
-    <div class="status-badge">
-        <div class="status-dot"></div>
-        <span>Currently Updated</span>
+    <div class="main-container">
+        <div class="status-pill">
+            <span class="dot"></span>
+            <span>Status: Online & Safe</span>
+        </div>
+
+        <section class="hero">
+            <h1>
+                The <span id="changing-word" class="highlight">Stable</span><br>
+                Way to Play
+            </h1>
+            <p>
+                Silkware is the best free tool for Roblox. It is safe, fast, and works better than the rest.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="goToCheckpoint()">Download Now</button>
+                <button class="btn-secondary" onclick="document.getElementById('faq').scrollIntoView({behavior: 'smooth'})">Read More</button>
+            </div>
+        </section>
+
+        <section id="faq" class="faq-section">
+            <h2>Common Questions</h2>
+            
+            <div class="faq-card" onclick="toggleFaq(this)">
+                <div class="faq-header">
+                    <span>How does it work? (API)</span>
+                    <svg class="arrow" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                    </svg>
+                </div>
+                <div class="faq-body">
+                    We use a strong system (95 UNC) to make sure your scripts run perfectly. We are also building an even better version for the future.
+                </div>
+            </div>
+
+            <div class="faq-card" onclick="toggleFaq(this)">
+                <div class="faq-header">
+                    <span>Where is the Discord?</span>
+                    <svg class="arrow" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                    </svg>
+                </div>
+                <div class="faq-body">
+                    Join our group for help and news: <a href="https://discord.gg/pQpFTTiP" target="_blank">Click here to join</a>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <section class="hero">
-        <h1 class="hero-text">
-            Silkware: The <span class="changing-text"><span class="text-highlight" id="changing-word">Stable</span></span> Execution Platform
-        </h1>
-        <p class="hero-subtitle">
-            Experience the best safe, undetected, executor of silkware out performs any others for <span class="roblox-highlight">roblox</span>.
-        </p>
-    </section>
-
-    <section class="faq-section" id="faq">
-        <h2 class="faq-title">Frequently Asked Questions</h2>
-        
-        <div class="faq-item" onclick="toggleFaq(this)">
-            <div class="faq-question">
-                <span>API Information (sUNC / UNC)</span>
-                <span class="faq-arrow">▼</span>
-            </div>
-            <div class="faq-answer">
-                We currently utilize the 95 UNC Based Xeno Module Quorum API, with our own custom API planned for a near-future release to provide even more robust and tailored functionality.
-            </div>
-        </div>
-
-        <div class="faq-item" onclick="toggleFaq(this)">
-            <div class="faq-question">
-                <span>Official Discord Server</span>
-                <span class="faq-arrow">▼</span>
-            </div>
-            <div class="faq-answer">
-                Join our official community for support and updates: <a href="https://discord.gg/pQpFTTiP" class="discord-link" target="_blank" rel="noopener noreferrer">https://discord.gg/pQpFTTiP</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="cta-bg"></div>
-        <button class="cta-button" onclick="goToCheckpoint()">Get Silkware Now</button>
-        <div class="app-preview"></div>
-    </section>
-
-    <div class="modal" id="about-modal" onclick="this.classList.remove('active')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <p>Section In Development</p>
-            <p class="modal-subtitle">This part of the website is currently being worked on for a future update.</p>
+    <div id="about-modal" class="modal" onclick="this.classList.remove('active')">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h3>About Silkware</h3>
+            <p>We are currently working on this page. Please check back later for updates.</p>
+            <button onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
         </div>
     </div>
 
