@@ -12,24 +12,26 @@
     <div class="cursor-glow" id="cursor-glow"></div>
 
     <nav class="glass-nav">
-        <button onclick="window.location.href='../index.html'" class="back-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-            <span>Go Back</span>
-        </button>
-        
-        <div class="nav-brand-center">
-            <img src="../silkwarelogo.png" alt="Silkware">
-            <span>Silkware</span>
+        <div class="nav-content">
+            <button onclick="window.location.href='../index.html'" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>Go Back</span>
+            </button>
+            
+            <div class="nav-brand-center">
+                <img src="../silkwarelogo.png" alt="Silkware">
+                <span>Silkware</span>
+            </div>
+            
+            <button class="keys-btn" onclick="toggleKeysModal()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+                </svg>
+                <span>Keys</span>
+            </button>
         </div>
-        
-        <button class="keys-btn" onclick="toggleKeysModal()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
-            </svg>
-            <span>Your Freemium Keys</span>
-        </button>
     </nav>
 
     <div class="checkpoint-wrapper">
