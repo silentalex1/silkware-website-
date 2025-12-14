@@ -21,14 +21,30 @@
     </div>
 
     <nav id="navbar">
-        <a href="https://discord.gg/pQpFTTiP" target="_blank" class="nav-brand">
-            <img src="silkwarelogo.png" alt="Silkware">
-            <span>Silkware</span>
-        </a>
-        <div class="nav-links">
-            <button class="nav-item" onclick="showAbout()">About</button>
-            <button class="nav-item" onclick="goToCheckpoint()">Download</button>
-            <button class="nav-cta" onclick="goToCheckpoint()">Get Started</button>
+        <div class="nav-container">
+            <a href="https://discord.gg/pQpFTTiP" target="_blank" class="nav-brand">
+                <img src="silkwarelogo.png" alt="Silkware">
+                <span>Silkware</span>
+            </a>
+            
+            <div class="nav-links">
+                <button class="nav-item" onclick="showAbout()">About</button>
+                <button class="nav-item" onclick="goToCheckpoint()">Download</button>
+                <button class="nav-cta" onclick="goToCheckpoint()">Get Started</button>
+            </div>
+
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <button onclick="showAbout()">About</button>
+            <button onclick="goToCheckpoint()">Download</button>
+            <button class="mobile-cta" onclick="goToCheckpoint()">Get Started</button>
         </div>
     </nav>
 
