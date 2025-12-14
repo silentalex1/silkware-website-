@@ -40,14 +40,19 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 20px 40px;
+    z-index: 100;
+    background: rgba(5, 5, 5, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+}
+
+.nav-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 100;
-    background: rgba(5, 5, 5, 0.8);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    padding: 15px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .back-btn, .keys-btn {
@@ -273,7 +278,6 @@ body {
 
 .simple-note { font-size: 13px; opacity: 0.6; }
 
-/* Overlay & Modals */
 .overlay {
     position: fixed;
     inset: 0;
@@ -356,6 +360,7 @@ body {
     display: flex;
     gap: 15px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .save-btn {
@@ -378,7 +383,6 @@ body {
     cursor: pointer;
 }
 
-/* Saved Keys List */
 .saved-keys-modal { text-align: left; padding: 0; overflow: hidden; }
 .modal-header {
     padding: 20px;
@@ -433,10 +437,8 @@ body {
 @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
 @media (max-width: 768px) {
+    .nav-content { padding: 15px 20px; }
+    .nav-brand-center span { display: none; }
     .step-list { display: none; }
-    .nav-brand-center { position: relative; left: auto; transform: none; }
-    .glass-nav { justify-content: space-between; padding: 15px 20px; }
-    .nav-placeholder { display: none; }
-    .keys-btn span { display: none; } 
-    .keys-btn { padding: 8px; border-radius: 8px; }
+    .key-text { font-size: 18px; }
 }
