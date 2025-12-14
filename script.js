@@ -61,3 +61,12 @@ function showAbout() {
 function scrollToFaq() {
     document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });
 }
+
+function toggleMobileMenu() {
+    var menu = document.getElementById('mobile-menu');
+    if(menu.classList.contains('active')) {
+        menu.classList.remove('active');
+    } else {
+        menu.classList.add('active');
+    }
+}
