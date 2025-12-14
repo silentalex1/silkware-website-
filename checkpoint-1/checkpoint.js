@@ -65,6 +65,9 @@ function handleAction() {
     clickTime = Date.now();
     isChecking = true;
     ui.error.classList.add('hidden');
+    
+    localStorage.setItem('silkware_click_time', clickTime);
+    localStorage.setItem('silkware_pending_step', currentStep);
 }
 
 function setNextStep() {
@@ -72,6 +75,8 @@ function setNextStep() {
     isChecking = false;
     
     localStorage.setItem('silkware_step', currentStep);
+    localStorage.removeItem('silkware_pending_step');
+    localStorage.removeItem('silkware_click_time');
     
     updateUI();
 }
@@ -98,7 +103,17 @@ function setReadyState() {
 }
 
 window.addEventListener('focus', function() {
-    if (!isChecking) return;
+    if (!isChecking) {
+        var pendingStep = parseInt(localStorage.getItem('silkware_pending_step'));
+        var storedTime = parseInt(localStorage.getItem('silkware_click_time'));
+        
+        if (pendingStep === currentStep && storedTime) {
+            isChecking = true;
+            clickTime = storedTime;
+        } else {
+            return;
+        }
+    }
 
     ui.error.classList.add('hidden');
     ui.loader.classList.remove('hidden');
@@ -107,13 +122,15 @@ window.addEventListener('focus', function() {
     setTimeout(function() {
         var timePassed = Date.now() - clickTime;
         
-        if (timePassed > 5000) {
+        if (timePassed > 8000) {
             setReadyState();
         } else {
             ui.loader.classList.add('hidden');
             ui.error.classList.remove('hidden');
             ui.barText.textContent = "Verification Failed";
             isChecking = false; 
+            localStorage.removeItem('silkware_pending_step');
+            localStorage.removeItem('silkware_click_time');
         }
     }, 2000); 
 });
@@ -144,7 +161,7 @@ function saveKeyToSite() {
     if(!savedKeys.some(k => k.key === generatedKey)) {
         savedKeys.push({
             key: generatedKey,
-            expiry: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+            expiry: Date.now() + (24 * 60 * 60 * 1000) 
         });
         localStorage.setItem('silkware_keys', JSON.stringify(savedKeys));
         alert("Key saved successfully!");
