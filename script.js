@@ -1,7 +1,7 @@
 window.addEventListener('load', function() {
     setTimeout(function() {
         document.getElementById('loading-screen').classList.add('hidden');
-    }, 1200);
+    }, 1000);
 });
 
 document.addEventListener('mousemove', function(e) {
@@ -14,7 +14,7 @@ document.addEventListener('mousemove', function(e) {
 
 var navbar = document.getElementById('navbar');
 window.addEventListener('scroll', function() {
-    if (window.scrollY > 20) {
+    if (window.scrollY > 30) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
@@ -28,30 +28,35 @@ var wordElement = document.getElementById('changing-word');
 function changeWord() {
     if (!wordElement) return;
     wordElement.style.opacity = '0';
-    wordElement.style.transform = 'translateY(10px)';
-    
     setTimeout(function() {
         wordIndex = (wordIndex + 1) % words.length;
         wordElement.textContent = words[wordIndex];
         wordElement.style.opacity = '1';
-        wordElement.style.transform = 'translateY(0)';
-    }, 200);
+    }, 400);
 }
 
 setInterval(changeWord, 3000);
 
 function toggleFaq(item) {
-    var allItems = document.querySelectorAll('.faq-item');
-    if (item.classList.contains('active')) {
-        item.classList.remove('active');
-        return;
-    }
-    allItems.forEach(function(i) { i.classList.remove('active'); });
-    item.classList.add('active');
+    var active = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('active'); });
+    if (!active) item.classList.add('active');
 }
 
 function goToCheckpoint() {
-    window.location.href = '/checkpoint-1';
+    window.location.href = 'checkpoint-1/index.html';
+}
+
+function downloadSilkware() {
+    window.location.href = "https://github.com/shadowdih20-cloud/SetupSilkWareDownload/releases/download/executor/SilKWareSetup.exe";
+    
+    setTimeout(function() {
+        var toast = document.getElementById('download-toast');
+        toast.classList.remove('hidden');
+        setTimeout(function() {
+            toast.classList.add('hidden');
+        }, 5000);
+    }, 2500);
 }
 
 function showAbout() {
@@ -63,10 +68,5 @@ function scrollToFaq() {
 }
 
 function toggleMobileMenu() {
-    var menu = document.getElementById('mobile-menu');
-    if(menu.classList.contains('active')) {
-        menu.classList.remove('active');
-    } else {
-        menu.classList.add('active');
-    }
+    document.getElementById('mobile-menu').classList.toggle('active');
 }
