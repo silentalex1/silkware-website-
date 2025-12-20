@@ -11,7 +11,128 @@
 <body>
     <div class="cursor-glow" id="cursor-glow"></div>
 
+    <div id="loading-screen"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silkware - Best Keyless Executor</title>
+    <link rel="icon" type="image/png" href="silkwarelogo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cursor-glow" id="cursor-glow"></div>
+
     <div id="loading-screen">
+        <div class="loading-content">
+            <img src="silkwarelogo.png" alt="Logo" class="loader-logo">
+            <div class="loading-bar">
+                <div class="loading-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="download-toast" class="toast hidden">
+        <div class="toast-content">
+            <div class="check-icon">✓</div>
+            <span>Thank you for downloading silkware.</span>
+        </div>
+    </div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="https://discord.gg/pQpFTTiP" target="_blank" class="nav-brand">
+                <img src="silkwarelogo.png" alt="Silkware">
+                <span>Silkware</span>
+            </a>
+            
+            <div class="nav-links">
+                <button class="nav-item" onclick="showAbout()">About</button>
+                <button class="nav-item" onclick="downloadSilkware()">Download</button>
+                <button class="nav-cta" onclick="goToCheckpoint()">Get Started</button>
+            </div>
+
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <button onclick="showAbout()">About</button>
+            <button onclick="downloadSilkware()">Download</button>
+            <button class="mobile-cta" onclick="goToCheckpoint()">Get Started</button>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            <span>Version 1.2 Updated</span>
+        </div>
+
+        <section class="hero">
+            <h1 class="hero-title">
+                Silkware: The <span id="changing-word" class="highlight-text">Stable</span><br>
+                Best lua scripting platform.
+            </h1>
+            
+            <p class="hero-desc">
+                Experience the best safe, undetected executor. Silkware works better than the rest for Roblox.
+            </p>
+
+            <div class="cta-group">
+                <button class="primary-btn" onclick="downloadSilkware()">
+                    <span>Download Silkware</span>
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </button>
+                <button class="secondary-btn" onclick="scrollToFaq()">Read FAQ</button>
+            </div>
+        </section>
+
+        <section id="faq" class="faq-section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-head">
+                    <span>API Information (sUNC / UNC)</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-content">
+                    We currently use the 95 UNC Based Xeno Module Quorum API. We are planning our own custom API soon for even better performance.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-head">
+                    <span>Official Discord Server</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-content">
+                    Join our official community for support and updates: <a href="https://discord.gg/pQpFTTiP" target="_blank">Click to Join</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="about-modal" class="modal" onclick="this.classList.remove('active')">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <h3>About Silkware</h3>
+            <p>Section In Development. This part of the website is currently being worked on for a future update.</p>
+            <button class="close-btn" onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
         <div class="loading-content">
             <img src="silkwarelogo.png" alt="Logo" class="loader-logo">
             <div class="loading-bar">
@@ -113,3 +234,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
