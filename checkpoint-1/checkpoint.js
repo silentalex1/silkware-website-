@@ -1,130 +1,137 @@
-document.addEventListener('mousemove', function(e) {
-    var cursor = document.getElementById('cursor-glow');
-    if (cursor) {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    }
-});
+const { useState, useEffect } = React;
 
-var currentStep = 1;
-var isChecking = false;
-var clickTime = 0;
+const Checkpoint = () => {
+    const [step, setStep] = useState(1);
+    const [isChecking, setIsChecking] = useState(false);
+    const [clickTime, setClickTime] = useState(0);
+    const [error, setError] = useState(false);
+    const [key, setKey] = useState(null);
+    const [savedKeysModal, setSavedKeysModal] = useState(false);
 
-var links = {
-    1: "https://work.ink/27Tr/ypomvhuy",
-    2: "https://work.ink/27Tr/checkpoint-02",
-    3: "https://work.ink/27Tr/ffft3jcz"
-};
+    const links = {
+        1: "https://work.ink/27Tr/ypomvhuy",
+        2: "https://work.ink/27Tr/checkpoint-02",
+        3: "https://work.ink/27Tr/ffft3jcz"
+    };
 
-var ui = {
-    title: document.getElementById('cp-title'),
-    stepNum: document.getElementById('step-number'),
-    btn: document.getElementById('action-btn'),
-    btnText: document.querySelector('#action-btn span'),
-    bar: document.getElementById('progress-fill'),
-    barText: document.getElementById('progress-text'),
-    percent: document.getElementById('percent-text'),
-    error: document.getElementById('error-msg'),
-    loader: document.getElementById('verify-loader'),
-    keyOverlay: document.getElementById('key-overlay'),
-    keyDisplay: document.getElementById('generated-key'),
-    savedKeysOverlay: document.getElementById('saved-keys-overlay'),
-    keysList: document.getElementById('keys-list')
-};
-
-function updateUI() {
-    ui.error.classList.add('hidden');
-    if (currentStep > 3) {
-        generateKeyFromAPI();
-        return;
-    }
-    ui.title.textContent = "Checkpoint " + currentStep;
-    ui.stepNum.textContent = currentStep;
-    var progress = (currentStep === 1) ? 15 : (currentStep === 2) ? 45 : 80;
-    ui.bar.style.width = progress + "%";
-    ui.percent.textContent = progress + "%";
-}
-
-function handleAction() {
-    if (isChecking) return;
-    window.open(links[currentStep], '_blank');
-    clickTime = Date.now();
-    isChecking = true;
-    ui.error.classList.add('hidden');
-}
-
-window.addEventListener('focus', function() {
-    if (!isChecking) return;
-    ui.loader.classList.remove('hidden');
-    ui.barText.textContent = "Verifying...";
-
-    setTimeout(function() {
-        var elapsed = Date.now() - clickTime;
-        ui.loader.classList.add('hidden');
-        if (elapsed > 10000) {
-            if (currentStep < 3) {
-                currentStep++;
-                isChecking = false;
-                updateUI();
+    useEffect(() => {
+        const handleFocus = () => {
+            if (!isChecking) return;
+            
+            const elapsed = Date.now() - clickTime;
+            if (elapsed > 10000) {
+                if (step < 3) {
+                    setStep(s => s + 1);
+                    setIsChecking(false);
+                } else {
+                    fetchKey();
+                }
             } else {
-                currentStep = 4;
-                updateUI();
+                setError(true);
+                setIsChecking(false);
             }
-        } else {
-            ui.error.classList.remove('hidden');
-            isChecking = false;
+        };
+
+        window.addEventListener('focus', handleFocus);
+        return () => window.removeEventListener('focus', handleFocus);
+    }, [isChecking, clickTime, step]);
+
+    const handleAction = () => {
+        window.open(links[step], '_blank');
+        setClickTime(Date.now());
+        setIsChecking(true);
+        setError(false);
+    };
+
+    const fetchKey = async () => {
+        setStep(4);
+        try {
+            const res = await fetch("https://SilkWareTM.pythonanywhere.com/add_key?duration=6h");
+            const data = await res.text();
+            setKey(data.trim());
+        } catch(e) {
+            setKey("SILK-" + Math.random().toString(36).substring(2, 10).toUpperCase());
         }
-    }, 2000);
-});
+    };
 
-async function generateKeyFromAPI() {
-    ui.keyOverlay.classList.remove('hidden');
-    ui.keyDisplay.textContent = "GENERATING...";
-    try {
-        const response = await fetch("https://SilkWareTM.pythonanywhere.com/add_key?duration=6h");
-        const key = await response.text();
-        ui.keyDisplay.textContent = key.trim();
-    } catch (e) {
-        ui.keyDisplay.textContent = "KEY-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-    }
-}
+    const saveToSite = () => {
+        const local = JSON.parse(localStorage.getItem('silk_keys') || "[]");
+        local.push({ key: key, exp: Date.now() + (6 * 60 * 60 * 1000) });
+        localStorage.setItem('silk_keys', JSON.stringify(local));
+        alert("Key saved for 6 hours.");
+    };
 
-function copyKey() {
-    navigator.clipboard.writeText(ui.keyDisplay.textContent);
-    alert("Key copied.");
-}
+    return (
+        <div className="min-h-screen flex flex-col items-center justify-center px-6 relative z-10">
+            <nav className="fixed top-0 w-full glass py-4 px-8 flex justify-between items-center z-50">
+                <button onClick={() => window.location.href='../index.html'} className="text-gray-400 hover:text-white flex items-center gap-2 font-semibold">
+                    <span>Go Back</span>
+                </button>
+                <div className="flex items-center gap-2 font-bold text-lg absolute left-1/2 -translate-x-1/2">
+                    <img src="../silkwarelogo.png" className="h-8" />
+                    <span>Silkware</span>
+                </div>
+                <button onClick={() => setSavedKeysModal(true)} className="text-gray-400 hover:text-white font-semibold">Keys</button>
+            </nav>
 
-function closeKeyUI() {
-    ui.keyOverlay.classList.add('hidden');
-    window.location.href = '../index.html';
-}
+            <div className="w-full max-w-md bg-card border border-white/5 rounded-[32px] p-10 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand to-transparent"></div>
+                
+                <h1 className="text-3xl font-black mb-2">{step > 3 ? "Complete" : `Checkpoint ${step}`}</h1>
+                <p className="text-xs text-gray-500 font-bold uppercase tracking-widest mb-10">Step <span className="text-brand">{step > 3 ? 3 : step}</span> of 3</p>
 
-function saveKeyToSite() {
-    var key = ui.keyDisplay.textContent;
-    var keys = JSON.parse(localStorage.getItem('silk_keys') || "[]");
-    keys.push({ val: key, exp: Date.now() + (6 * 60 * 60 * 1000) });
-    localStorage.setItem('silk_keys', JSON.stringify(keys));
-    alert("Key saved for 6 hours.");
-}
+                {error && <p className="text-red-500 text-sm font-semibold mb-4">Did you do the key system?</p>}
+                {isChecking && <p className="text-gray-400 text-sm animate-pulse mb-4">Verifying...</p>}
 
-function toggleKeysModal() {
-    ui.savedKeysOverlay.classList.toggle('hidden');
-    if (!ui.savedKeysOverlay.classList.contains('hidden')) {
-        renderKeys();
-    }
-}
+                {step <= 3 ? (
+                    <button onClick={handleAction} className="w-full bg-brand text-black font-black py-4 rounded-2xl hover:scale-[1.02] transition-all mb-8 shadow-xl shadow-brand/10">
+                        Get Key Here
+                    </button>
+                ) : (
+                    <div className="mb-8">
+                        <div className="bg-white/5 border border-white/10 p-5 rounded-2xl mb-4 group cursor-pointer" onClick={() => {navigator.clipboard.writeText(key); alert('Copied');}}>
+                            <span className="text-brand font-mono text-xl block truncate">{key || "GENERATING..."}</span>
+                            <span className="text-[10px] text-gray-500 font-bold uppercase mt-2 block">Click to copy</span>
+                        </div>
+                        <div className="flex gap-2">
+                            <button onClick={saveToSite} className="flex-1 bg-brand text-black font-bold py-3 rounded-xl">Save key</button>
+                            <button onClick={() => window.location.href='../index.html'} className="flex-1 bg-white/5 border border-white/10 font-bold py-3 rounded-xl">Close</button>
+                        </div>
+                    </div>
+                )}
 
-function renderKeys() {
-    var keys = JSON.parse(localStorage.getItem('silk_keys') || "[]");
-    ui.keysList.innerHTML = keys.length ? "" : "No active keys.";
-    keys.forEach(k => {
-        if (k.exp > Date.now()) {
-            var d = document.createElement('div');
-            d.className = 'key-item';
-            d.innerHTML = `<strong>${k.val}</strong><br><small>6 Hour Session</small>`;
-            ui.keysList.appendChild(d);
-        }
-    });
-}
+                <div className="space-y-2">
+                    <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-full bg-brand transition-all duration-1000" style={{width: `${(Math.min(step, 3)/3)*100}%`}}></div>
+                    </div>
+                    <div className="flex justify-between text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                        <span>{step > 3 ? "Finished" : "Waiting"}</span>
+                        <span>{Math.round((Math.min(step, 3)/3)*100)}%</span>
+                    </div>
+                </div>
+            </div>
 
-updateUI();
+            {savedKeysModal && (
+                <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-6">
+                    <div className="bg-card border border-white/10 rounded-3xl w-full max-w-sm overflow-hidden">
+                        <div className="p-6 border-b border-white/5 flex justify-between items-center">
+                            <h3 className="font-bold">Your Keys</h3>
+                            <button onClick={() => setSavedKeysModal(false)}>✕</button>
+                        </div>
+                        <div className="p-6 max-h-[300px] overflow-y-auto space-y-3">
+                            {JSON.parse(localStorage.getItem('silk_keys') || "[]").map((k, i) => (
+                                k.exp > Date.now() && <div key={i} className="bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <span className="text-brand font-mono block mb-1">{k.key}</span>
+                                    <span className="text-[10px] text-gray-500 uppercase font-bold">Expires in 6h</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Checkpoint />);
