@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOS - Silkware</title>
+    <title>Terms of Service - Silkware</title>
+    <link rel="icon" type="image/png" href="../silkwarelogo.png">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="tos.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { brand: '#00ff55', dark: '#050505', card: '#0b0b0d' } }
+            }
+        }
+    </script>
 </head>
-<body class="bg-[#050505] text-white font-sans">
-    <nav class="p-6 flex items-center border-b border-white/5">
-        <button onclick="window.location.href='/'" class="text-gray-400 hover:text-white flex items-center gap-2">
-            <span>← Go Back</span>
-        </button>
-    </nav>
-    <div class="max-w-3xl mx-auto py-20 px-6">
-        <h1 class="text-4xl font-black mb-10">Terms of Service</h1>
-        <div class="space-y-6 text-gray-400 leading-relaxed">
-            <p>1. By using Silkware, you agree that we are not responsible for any game bans.</p>
-            <p>2. Do not attempt to resell our software.</p>
-            <p>3. Use our tools safely and follow all community rules.</p>
-        </div>
-    </div>
-    <script src="tos.js"></script>
+<body class="bg-dark text-white font-['Inter']">
+    <div id="root"></div>
+    <script type="text/babel" src="tos.js"></script>
 </body>
 </html>
