@@ -9,7 +9,7 @@ const App = () => {
         about: false,
         suggestions: false,
         downloadChoice: false,
-        silentSoon: false,
+        executorSoon: false,
         thankYou: false
     });
 
@@ -45,7 +45,7 @@ const App = () => {
         if(val) setMobileMenu(false);
     };
 
-    const handleDownloadExecutor = () => {
+    const handleDownloadSilent = () => {
         window.location.href = "https://github.com/shadowdih20-cloud/SetupSilkWareDownload/releases/download/executor/SilKWareSetup.exe";
         toggleModal('downloadChoice', false);
         setTimeout(() => toggleModal('thankYou', true), 1500);
@@ -80,9 +80,7 @@ const App = () => {
                         <button onClick={() => window.location.href='checkpoint-1/'} className="bg-white text-black px-5 py-2 rounded-full hover:bg-brand transition-all font-bold">Get Started</button>
                     </div>
 
-                    <button onClick={() => setMobileMenu(true)} className="lg:hidden text-2xl text-white font-bold p-2">
-                        ＝
-                    </button>
+                    <button onClick={() => setMobileMenu(true)} className="lg:hidden text-2xl text-white font-bold p-2">＝</button>
                 </div>
             </nav>
 
@@ -126,21 +124,6 @@ const App = () => {
                         Read FAQ
                     </button>
                 </div>
-
-                <section id="faq" className="mt-40 w-full max-w-3xl hero-animate">
-                    <h2 className="text-3xl font-bold mb-10">Frequently Asked Questions</h2>
-                    <div className="space-y-4 text-left">
-                        {[
-                            {q: "API Information (sUNC / UNC)", a: "We currently use the 95 UNC Based Xeno Module Quorum API. We are planning our own custom API soon for even better performance."},
-                            {q: "Official Discord Server", a: "Join our official community for support and updates: <a href='https://discord.gg/pQpFTTiP' target='_blank' class='text-brand font-bold'>Click to Join</a>"}
-                        ].map((item, idx) => (
-                            <div key={idx} className="bg-card border border-white/5 rounded-2xl p-6">
-                                <h3 className="font-bold mb-2 text-lg">{item.q}</h3>
-                                <p className="text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{__html: item.a}}></p>
-                            </div>
-                        ))}
-                    </div>
-                </section>
             </main>
 
             {modals.downloadChoice && (
@@ -149,10 +132,10 @@ const App = () => {
                         <h3 className="text-2xl font-bold mb-2 text-white">Select Version</h3>
                         <p className="text-gray-400 mb-8 text-sm">Do you want to download silkware silent or silkware executor?</p>
                         <div className="flex flex-col gap-3">
-                            <button onClick={() => toggleModal('silentSoon', true)} className="bg-white/5 border border-white/10 py-4 rounded-xl font-bold flex items-center justify-center gap-3">
+                            <button onClick={handleDownloadSilent} className="bg-white/5 border border-white/10 py-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all">
                                 ⚡ Silkware Silent
                             </button>
-                            <button onClick={handleDownloadExecutor} className="bg-brand text-black py-4 rounded-xl font-bold flex items-center justify-center gap-3">
+                            <button onClick={() => toggleModal('executorSoon', true)} className="bg-brand text-black py-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:scale-[1.02] transition-all">
                                 📥 Silkware Executor
                             </button>
                         </div>
@@ -161,12 +144,12 @@ const App = () => {
                 </div>
             )}
 
-            {modals.silentSoon && (
+            {modals.executorSoon && (
                 <div className="fixed inset-0 z-[210] bg-black/95 flex items-center justify-center p-6">
                     <div className="bg-card border border-white/10 p-8 rounded-3xl max-w-sm w-full text-center">
                         <h3 className="text-2xl font-bold mb-2">Coming soon.</h3>
-                        <p className="text-gray-400 mb-6 text-sm">silkware silent is coming soon, our api devs are working there ass off to make silkware silent possible.</p>
-                        <button onClick={() => toggleModal('silentSoon', false)} className="bg-brand text-black w-full py-3 rounded-xl font-bold">ok</button>
+                        <p className="text-gray-400 mb-6 text-sm">Silkware executor is being worked on. Our devs are making it safe for you soon.</p>
+                        <button onClick={() => toggleModal('executorSoon', false)} className="bg-brand text-black w-full py-3 rounded-xl font-bold">ok</button>
                     </div>
                 </div>
             )}
@@ -177,45 +160,6 @@ const App = () => {
                         <div className="text-brand text-4xl mb-4 flex justify-center">✓</div>
                         <h3 className="text-xl font-bold mb-4">Thank you for downloading silkware.</h3>
                         <button onClick={() => toggleModal('thankYou', false)} className="bg-brand text-black w-full py-3 rounded-xl font-bold">Close</button>
-                    </div>
-                </div>
-            )}
-
-            {modals.about && (
-                <div className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-6" onClick={() => toggleModal('about', false)}>
-                    <div className="bg-card border border-white/10 p-10 rounded-[40px] max-w-2xl w-full text-left" onClick={e => e.stopPropagation()}>
-                        <h3 className="text-3xl font-black mb-6 tracking-tighter">About Silkware</h3>
-                        <div className="text-gray-400 leading-relaxed space-y-4 text-sm font-medium">
-                            <p>SilkWare is an external Roblox executor designed with performance and stability in mind. It delivers smooth script execution and efficient memory handling for an optimal experience.</p>
-                            <p>What truly sets SilkWare apart is its dedication to being a completely Free and Keyless Executor, ensuring everyone can access its full power without hassle. Its clean and user-friendly interface makes it easy for both beginners and advanced users to enjoy.</p>
-                            <p>With powerful features like multi-attach support, an integrated Online Script Hub, and seamless Online Script Execution, SilkWare provides everything you need in a reliable Roblox utility tool. Regular updates keep it fully compatible with the latest Roblox versions.</p>
-                            <p>Join our Discord community to follow SilkWare’s development, receive updates, and check out the newest changelogs.</p>
-                        </div>
-                        <button onClick={() => toggleModal('about', false)} className="bg-white/10 text-white w-full py-4 rounded-2xl font-bold hover:bg-white/20 mt-8 transition-all">Close</button>
-                    </div>
-                </div>
-            )}
-
-            {modals.suggestions && (
-                <div className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-6">
-                    <div className="bg-card border border-white/10 p-8 rounded-3xl max-w-lg w-full">
-                        <div className="flex justify-between items-center mb-6">
-                            <h3 className="text-xl font-bold">Suggestions</h3>
-                            <button onClick={() => toggleModal('suggestions', false)} className="text-gray-500 hover:text-white text-2xl">✕</button>
-                        </div>
-                        <div className="space-y-5">
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-2 font-bold">Discord Username</label>
-                                <input id="s-user" type="text" className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-brand transition-all" placeholder="Username" />
-                            </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-2 font-bold">Suggestion</label>
-                                <textarea id="s-text" className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-brand transition-all h-32 resize-none" placeholder="Your idea..."></textarea>
-                            </div>
-                            <div className="flex justify-center">
-                                <button className="bg-brand text-black font-black px-10 py-3 rounded-xl hover:scale-105 transition-all">Submit suggestion.</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             )}
