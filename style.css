@@ -35,6 +35,7 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    text-align: center;
 }
 
 .cursor-glow {
@@ -100,7 +101,6 @@ nav {
     z-index: 100;
     background: transparent;
     transition: all 0.3s ease;
-    border-bottom: 1px solid transparent;
 }
 
 nav.scrolled {
@@ -128,9 +128,7 @@ nav.scrolled {
     text-decoration: none;
 }
 
-.nav-brand img {
-    height: 32px;
-}
+.nav-brand img { height: 32px; }
 
 .nav-links {
     display: flex;
@@ -161,9 +159,7 @@ nav.scrolled {
     transition: 0.2s;
 }
 
-.nav-cta:hover {
-    background: var(--green);
-}
+.nav-cta:hover { background: var(--green); }
 
 .mobile-toggle {
     display: none;
@@ -181,9 +177,7 @@ nav.scrolled {
     gap: 15px;
 }
 
-.mobile-menu.active {
-    display: flex;
-}
+.mobile-menu.active { display: flex; }
 
 .mobile-menu button {
     background: transparent;
@@ -202,7 +196,6 @@ nav.scrolled {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
     position: relative;
     z-index: 1;
 }
@@ -241,7 +234,6 @@ nav.scrolled {
 .highlight-text {
     color: var(--green);
     display: inline-block;
-    transition: 0.3s;
 }
 
 .hero-desc {
@@ -249,7 +241,8 @@ nav.scrolled {
     font-size: 18px;
     max-width: 600px;
     line-height: 1.6;
-    margin-bottom: 45px;
+    margin: 0 auto 45px;
+    display: block;
 }
 
 .cta-group {
@@ -259,14 +252,17 @@ nav.scrolled {
     justify-content: center;
 }
 
+.primary-btn.skinny, .secondary-btn.skinny {
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
 .primary-btn {
     background: var(--green);
     color: #000;
     border: none;
-    padding: 10px 24px;
-    border-radius: 10px;
     font-weight: 700;
-    font-size: 15px;
     cursor: pointer;
     transition: 0.3s;
     display: flex;
@@ -274,38 +270,24 @@ nav.scrolled {
     gap: 8px;
 }
 
-.primary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 255, 85, 0.2);
-}
-
-.btn-icon {
-    width: 18px;
-    height: 18px;
-}
+.primary-btn:hover { transform: translateY(-2px); }
 
 .secondary-btn {
     background: rgba(255,255,255,0.05);
     color: var(--text-white);
     border: 1px solid var(--border);
-    padding: 10px 24px;
-    border-radius: 10px;
     font-weight: 600;
-    font-size: 15px;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .faq-section {
-    margin-top: 100px;
+    margin: 100px auto 0;
     width: 100%;
     max-width: 800px;
 }
 
-.section-title {
-    font-size: 32px;
-    margin-bottom: 40px;
-}
+.section-title { font-size: 32px; margin-bottom: 40px; }
 
 .faq-item {
     background: var(--bg-card);
@@ -325,27 +307,17 @@ nav.scrolled {
     font-weight: 600;
 }
 
-.faq-arrow {
-    font-size: 12px;
-    transition: transform 0.3s;
-    color: var(--text-gray);
-}
-
 .faq-content {
     padding: 0 20px;
     height: 0;
     overflow: hidden;
     color: var(--text-gray);
-    line-height: 1.6;
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
-.faq-item.active .faq-content {
-    height: auto;
-    padding-bottom: 20px;
-}
+.faq-item.active .faq-content { height: auto; padding-bottom: 20px; }
 
-.faq-content a { color: var(--text-white); text-decoration: none; font-weight: 600; }
+.white-link { color: #fff !important; font-weight: 700; text-decoration: none; }
 
 .modal {
     position: fixed;
@@ -369,12 +341,50 @@ nav.scrolled {
     padding: 30px;
     border-radius: 16px;
     width: 90%;
-    max-width: 400px;
-    text-align: center;
+    max-width: 450px;
+    text-align: left;
 }
 
-.modal-card h3 { margin-bottom: 10px; font-size: 20px; }
-.modal-card p { color: var(--text-gray); margin-bottom: 20px; line-height: 1.5; }
+.suggestion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.icon-close {
+    background: none;
+    border: none;
+    color: var(--text-gray);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.input-group { margin-bottom: 20px; }
+.input-group label {
+    display: block;
+    font-size: 14px;
+    color: var(--text-gray);
+    margin-bottom: 8px;
+}
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    background: #151515;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    color: #fff;
+    outline: none;
+}
+
+.input-group textarea { height: 100px; resize: none; }
+
+.btn-center {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
 
 .close-btn {
     background: var(--green);
@@ -384,9 +394,8 @@ nav.scrolled {
     border-radius: 8px;
     font-weight: 700;
     cursor: pointer;
+    margin-top: 10px;
 }
-
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
 @media (max-width: 768px) {
     .nav-links { display: none; }
