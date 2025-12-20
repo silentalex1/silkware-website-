@@ -49,6 +49,7 @@ const CheckpointApp = () => {
         try {
             const res = await fetch("https://SilkWareTM.pythonanywhere.com/add_key?duration=6h");
             const data = await res.json();
+            
             setKeyData({
                 val: data.key,
                 expires: new Date(data.expires_at).toLocaleString(),
@@ -120,7 +121,7 @@ const CheckpointApp = () => {
                 ) : (
                     <div className="mb-10">
                         <div className="bg-white/5 border border-white/10 p-6 rounded-2xl mb-4 cursor-pointer" onClick={() => {navigator.clipboard.writeText(keyData.val); alert('Copied');}}>
-                            <span className="text-brand font-mono text-xl block truncate">{keyData.val}</span>
+                            <span className="text-brand font-mono text-xl block truncate font-bold">{keyData.val}</span>
                             <span className="text-[10px] text-gray-400 font-bold uppercase mt-4 block">Ends: {keyData.expires}</span>
                             <span className="text-[10px] text-gray-600 font-bold uppercase mt-2 block italic">Click to copy key</span>
                         </div>
@@ -135,10 +136,6 @@ const CheckpointApp = () => {
                     <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
                         <div className="h-full bg-brand transition-all duration-1000" style={{width: `${(Math.min(step, 3)/3)*100}%`}}></div>
                     </div>
-                    <div className="text-[10px] font-black text-gray-600 uppercase tracking-widest flex justify-between">
-                        <span>Waiting...</span>
-                        <span>{Math.round((Math.min(step, 3)/3)*100)}%</span>
-                    </div>
                 </div>
             </div>
 
@@ -147,7 +144,7 @@ const CheckpointApp = () => {
                     <div className="bg-card border border-white/10 rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
                         <div className="p-6 border-b border-white/5 flex justify-between items-center">
                             <h3 className="font-bold">Your Saved Keys</h3>
-                            <button onClick={() => setSavedKeysModal(false)} className="text-gray-500 hover:text-white">✕</button>
+                            <button onClick={() => setSavedKeysModal(false)} className="text-gray-500 hover:text-white text-2xl">✕</button>
                         </div>
                         <div className="p-6 max-h-[400px] overflow-y-auto space-y-4">
                             {savedKeys.length === 0 ? 
