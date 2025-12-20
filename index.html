@@ -28,6 +28,28 @@
         </div>
     </div>
 
+    <div id="suggestion-modal" class="modal">
+        <div class="modal-card suggestion-card">
+            <div class="suggestion-header">
+                <h3>Suggestions</h3>
+                <button class="icon-close" onclick="closeSuggestions()">✕</button>
+            </div>
+            <div class="suggestion-body">
+                <div class="input-group">
+                    <label>Enter your discord username:</label>
+                    <input type="text" id="suggest-user" placeholder="Username#0000">
+                </div>
+                <div class="input-group">
+                    <label>Enter your suggestion for our dev team to improve our executor :)</label>
+                    <textarea id="suggest-text" placeholder="Your idea..."></textarea>
+                </div>
+                <div class="btn-center">
+                    <button class="primary-btn skinny" onclick="submitSuggestion()">Submit suggestion.</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <nav id="navbar">
         <div class="nav-container">
             <a href="https://discord.gg/pQpFTTiP" target="_blank" class="nav-brand">
@@ -37,6 +59,7 @@
             
             <div class="nav-links">
                 <button class="nav-item" onclick="showAbout()">About</button>
+                <button class="nav-item" onclick="openSuggestions()">Suggestions</button>
                 <button class="nav-item" onclick="downloadSilkware()">Download</button>
                 <button class="nav-cta" onclick="goToCheckpoint()">Get Started</button>
             </div>
@@ -51,6 +74,7 @@
         </div>
         <div class="mobile-menu" id="mobile-menu">
             <button onclick="showAbout()">About</button>
+            <button onclick="openSuggestions()">Suggestions</button>
             <button onclick="downloadSilkware()">Download</button>
             <button class="mobile-cta" onclick="goToCheckpoint()">Get Started</button>
         </div>
@@ -64,8 +88,8 @@
 
         <section class="hero">
             <h1 class="hero-title">
-                Silkware: The <span id="changing-word" class="highlight-text">Stable</span><br>
-                Best lua scripting platform.
+                Silkware: The <span id="changing-word" class="highlight-text">Safe</span><br>
+                Best lua scripting app.
             </h1>
             
             <p class="hero-desc">
@@ -73,7 +97,7 @@
             </p>
 
             <div class="cta-group">
-                <button class="primary-btn" onclick="downloadSilkware()">
+                <button class="primary-btn skinny" onclick="downloadSilkware()">
                     <span>Download Silkware</span>
                     <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -81,7 +105,7 @@
                         <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
                 </button>
-                <button class="secondary-btn" onclick="scrollToFaq()">Read FAQ</button>
+                <button class="secondary-btn skinny" onclick="scrollToFaq()">Read FAQ</button>
             </div>
         </section>
 
@@ -104,7 +128,7 @@
                     <span class="faq-arrow">▼</span>
                 </div>
                 <div class="faq-content">
-                    Join our official community for support and updates: <a href="https://discord.gg/pQpFTTiP" target="_blank">Click to Join</a>
+                    Join our official community for support and updates: <a href="https://discord.gg/pQpFTTiP" target="_blank" class="white-link">Click to Join</a>
                 </div>
             </div>
         </section>
