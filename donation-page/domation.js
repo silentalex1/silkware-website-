@@ -11,8 +11,29 @@ const DonationApp = () => {
         });
     }, []);
 
+    const devs = [
+        {
+            name: "azreuf",
+            pfp: "gojopfp.png",
+            bio: "Project Owner",
+            link: "https://www.paypal.com/ncp/payment/E9VCYQ2YSHTQG"
+        },
+        {
+            name: "TheRealHyder",
+            pfp: "dogpfp.png",
+            bio: "I love femboys ❤️",
+            link: "https://www.paypal.com/ncp/payment/E9VCYQ2YSHTQG"
+        },
+        {
+            name: "Gio",
+            pfp: null,
+            bio: "Developer",
+            link: null
+        }
+    ];
+
     return (
-        <div className="relative z-10 min-h-screen flex flex-col">
+        <div className="relative z-10 min-h-screen flex flex-col pb-20">
             <nav className="p-8 flex justify-between items-center max-w-7xl mx-auto w-full">
                 <button onClick={() => window.location.href='/'} className="text-gray-400 hover:text-white flex items-center gap-2 font-bold transition-all">
                     <span>← Go back</span>
@@ -24,37 +45,44 @@ const DonationApp = () => {
                 <div className="w-20"></div>
             </nav>
 
-            <main className="flex-1 flex items-center justify-center px-6">
-                <div className="donation-card bg-card border border-white/5 p-12 rounded-[48px] text-center max-w-lg w-full shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand to-transparent opacity-50"></div>
-                    
-                    <div className="inline-flex items-center justify-center w-20 h-20 bg-brand/10 rounded-3xl mb-8">
-                        <svg className="w-10 h-10 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </div>
+            <main className="max-w-4xl mx-auto w-full px-6 pt-10">
+                <div className="text-center mb-16">
+                    <h1 className="text-5xl font-black mb-4 tracking-tighter">Support Developers</h1>
+                    <p className="text-gray-500 font-medium">Help keep Silkware running.</p>
+                </div>
 
-                    <h1 className="text-4xl font-black mb-4 tracking-tighter">Coming soon.</h1>
-                    <p className="text-gray-400 font-medium leading-relaxed mb-10">
-                        We are working on a way for you to support the project. 
-                        Donations will help us pay for servers and keep our tools safe for everyone.
-                    </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                    {devs.map((dev, idx) => (
+                        <div key={idx} className="bg-card border border-white/5 p-8 rounded-[40px] flex flex-col items-center text-center group relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-brand/10 group-hover:bg-brand/30 transition-all"></div>
+                            
+                            <div className="w-24 h-24 rounded-3xl bg-white/5 border border-white/10 overflow-hidden mb-6 flex items-center justify-center">
+                                {dev.pfp ? (
+                                    <img src={dev.pfp} className="w-full h-full object-cover" />
+                                ) : (
+                                    <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">updating..</span>
+                                )}
+                            </div>
+                            
+                            <h3 className="text-2xl font-black mb-1 tracking-tight">{dev.name}</h3>
+                            <p className="text-gray-400 text-sm mb-8 font-bold italic">{dev.bio}</p>
 
-                    <div className="grid gap-3">
-                        <div className="bg-white/5 py-4 rounded-2xl border border-white/5 text-gray-500 font-bold text-sm italic">
-                            Payment methods are being set up...
+                            {dev.link ? (
+                                <button 
+                                    onClick={() => window.open(dev.link, '_blank')}
+                                    className="w-full bg-brand text-black font-black py-4 rounded-2xl hover:scale-[1.02] transition-all shadow-lg shadow-brand/10 flex items-center justify-center gap-2"
+                                >
+                                    Donation Link
+                                </button>
+                            ) : (
+                                <div className="w-full bg-white/5 border border-white/10 py-4 rounded-2xl text-gray-600 font-black flex items-center justify-center">
+                                    <div className="flex items-center gap-2 animate-pulse">
+                                        <span>Updating..</span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        <button 
-                            onClick={() => window.location.href='/'}
-                            className="bg-brand text-black font-black py-4 rounded-2xl hover:scale-[1.02] transition-all shadow-lg shadow-brand/10"
-                        >
-                            Back to Home
-                        </button>
-                    </div>
-                    
-                    <p className="mt-8 text-[10px] text-gray-600 font-bold uppercase tracking-widest">
-                        Support the future of Silkware
-                    </p>
+                    ))}
                 </div>
             </main>
         </div>
