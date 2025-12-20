@@ -1,7 +1,7 @@
 window.addEventListener('load', function() {
     setTimeout(function() {
         document.getElementById('loading-screen').classList.add('hidden');
-    }, 1000);
+    }, 1200);
 });
 
 document.addEventListener('mousemove', function(e) {
@@ -14,7 +14,7 @@ document.addEventListener('mousemove', function(e) {
 
 var navbar = document.getElementById('navbar');
 window.addEventListener('scroll', function() {
-    if (window.scrollY > 30) {
+    if (window.scrollY > 20) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
@@ -32,7 +32,7 @@ function changeWord() {
         wordIndex = (wordIndex + 1) % words.length;
         wordElement.textContent = words[wordIndex];
         wordElement.style.opacity = '1';
-    }, 400);
+    }, 200);
 }
 
 setInterval(changeWord, 3000);
@@ -47,20 +47,19 @@ function goToCheckpoint() {
     window.location.href = 'checkpoint-1/index.html';
 }
 
-function downloadSilkware() {
-    window.location.href = "https://github.com/shadowdih20-cloud/SetupSilkWareDownload/releases/download/executor/SilKWareSetup.exe";
-    
-    setTimeout(function() {
-        var toast = document.getElementById('download-toast');
-        toast.classList.remove('hidden');
-        setTimeout(function() {
-            toast.classList.add('hidden');
-        }, 5000);
-    }, 2500);
-}
-
 function showAbout() {
     document.getElementById('about-modal').classList.add('active');
+}
+
+function downloadSilkware() {
+    window.location.href = "https://github.com/shadowdih20-cloud/SetupSilkWareDownload/releases/download/executor/SilKWareSetup.exe";
+    setTimeout(function() {
+        document.getElementById('download-modal').classList.add('active');
+    }, 2000);
+}
+
+function closeDownloadUI() {
+    document.getElementById('download-modal').classList.remove('active');
 }
 
 function scrollToFaq() {
@@ -68,5 +67,6 @@ function scrollToFaq() {
 }
 
 function toggleMobileMenu() {
-    document.getElementById('mobile-menu').classList.toggle('active');
+    var menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('active');
 }
