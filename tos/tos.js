@@ -19,21 +19,21 @@ const TosApp = () => {
         { id: 6, icon: "M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z", t: "Do not spam.", d: "Do not send the same thing repeatedly. No flooding the chat with images." },
         { id: 7, icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z", t: "Keep it peaceful.", d: "Keep extreme thoughts to yourself. This is a safe space for everyone." },
         { id: 8, icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4", t: "Do not skip rules.", d: "Do not look for loopholes. Rules must be followed exactly as written." },
-        { id: 9, icon: "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636", t: "NO GOONING.", d: "No gooning allowed. Doing this results in an instant ban from the project.", red: true }
+        { id: 9, icon: "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636", t: "NO GOONING.", d: "No gooning allowed. Doing this results in an instant ban from the project.", red: true },
+        { id: 10, icon: "M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z", t: "Do not be a retard, or do not skid.", d: "just act like a normal person, if we also catch you skidding your blacklisted we dont want skidders in our server." }
     ];
 
     return (
         <div className="relative z-10">
             <nav className="fixed top-0 w-full bg-dark/80 backdrop-blur-md border-b border-white/5 py-4 px-8 z-50">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
-                    <button onClick={() => window.location.href='/'} className="text-gray-400 hover:text-white flex items-center gap-2 font-bold">
+                    <button onClick={() => window.location.href='../'} className="text-gray-400 hover:text-white flex items-center gap-2 font-bold">
                         <span>← Go back</span>
                     </button>
                     <div className="flex items-center gap-2 font-bold text-lg absolute left-1/2 -translate-x-1/2">
                         <img src="../silkwarelogo.png" className="h-8" />
                         <span>Silkware</span>
                     </div>
-                    <div className="w-20"></div>
                 </div>
             </nav>
 
@@ -46,7 +46,7 @@ const TosApp = () => {
 
                 <div className="grid gap-4 mb-12">
                     {rules.map(rule => (
-                        <div key={rule.id} className={`rule-card bg-card border ${rule.red ? 'border-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.05)]' : 'border-white/5'} p-6 rounded-[24px] relative overflow-hidden group`}>
+                        <div key={rule.id} className={`rule-card bg-card border ${rule.red ? 'border-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.05)]' : 'border-white/5'} p-6 rounded-[24px]`}>
                             <div className="flex gap-5 relative z-10">
                                 <div className={`w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center ${rule.red ? 'bg-red-500/10 text-red-500' : 'bg-brand/5 text-brand'} border border-white/5`}>
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={rule.icon}></path></svg>
@@ -69,14 +69,12 @@ const TosApp = () => {
                             Breaking these rules will lead to a blacklist or ban.
                         </button>
                     )}
-
                     {buttonState === 'success' && (
                         <div className="w-full max-w-xl bg-brand/5 border border-brand/40 py-8 rounded-[24px] text-center shadow-[0_0_40px_rgba(0,255,85,0.1)]">
                             <p className="text-brand font-black text-xl mb-1">Ty for following the rules!</p>
                             <p className="text-brand/50 text-[10px] font-black uppercase tracking-[0.3em]">such a w</p>
                         </div>
                     )}
-
                     {buttonState === 'green' && (
                         <div className="w-full max-w-xl bg-brand border border-brand py-8 rounded-[24px] text-black font-black text-center shadow-[0_0_40px_rgba(0,255,85,0.2)]">
                             Rules Accepted Successfully
