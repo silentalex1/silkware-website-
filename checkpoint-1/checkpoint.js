@@ -49,7 +49,6 @@ const CheckpointApp = () => {
         try {
             const res = await fetch("https://SilkWareTM.pythonanywhere.com/add_key?duration=6h");
             const data = await res.json();
-            
             setKeyData({
                 val: data.key,
                 expires: new Date(data.expires_at).toLocaleString(),
@@ -63,14 +62,6 @@ const CheckpointApp = () => {
                 timestamp: ts
             });
         }
-    };
-
-    const saveToSite = () => {
-        const local = JSON.parse(localStorage.getItem('silk_keys') || "[]");
-        local.push({ key: keyData.val, exp: keyData.timestamp, dateString: keyData.expires });
-        localStorage.setItem('silk_keys', JSON.stringify(local));
-        setSavedKeys(local);
-        alert("Key saved.");
     };
 
     const Timer = ({ expiry }) => {
@@ -96,7 +87,7 @@ const CheckpointApp = () => {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center px-6 relative z-10">
             <nav className="fixed top-0 w-full bg-dark/50 backdrop-blur-md py-4 px-8 flex justify-between items-center z-50 border-b border-white/5">
-                <button onClick={() => window.location.href='/'} className="text-gray-400 hover:text-white flex items-center gap-2 font-bold">
+                <button onClick={() => window.location.href='../'} className="text-gray-400 hover:text-white flex items-center gap-2 font-bold">
                     <span>← Go Back</span>
                 </button>
                 <div className="flex items-center gap-2 font-bold text-lg absolute left-1/2 -translate-x-1/2">
@@ -111,23 +102,25 @@ const CheckpointApp = () => {
                 <h1 className="text-4xl font-black mb-2 tracking-tighter">{step > 3 ? "Complete" : `Checkpoint ${step}`}</h1>
                 <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-12">Step <span className="text-brand">{step > 3 ? 3 : step}</span> of 3</p>
 
-                {error && <p className="text-red-500 text-xs font-bold mb-6">Check return status failed</p>}
-                {isChecking && <p className="text-gray-400 text-xs font-bold animate-pulse mb-6">Verifying return...</p>}
-
                 {step <= 3 ? (
                     <button onClick={handleActionClick} className="w-full bg-brand text-black font-black py-4 rounded-2xl hover:scale-[1.02] transition-all mb-10 text-sm shadow-lg shadow-brand/10">
                         Get Key Here
                     </button>
                 ) : (
-                    <div className="mb-10">
-                        <div className="bg-white/5 border border-white/10 p-6 rounded-2xl mb-4 cursor-pointer" onClick={() => {navigator.clipboard.writeText(keyData.val); alert('Copied');}}>
-                            <span className="text-brand font-mono text-xl block truncate font-bold">{keyData.val}</span>
-                            <span className="text-[10px] text-gray-400 font-bold uppercase mt-4 block">Ends: {keyData.expires}</span>
-                            <span className="text-[10px] text-gray-600 font-bold uppercase mt-2 block italic">Click to copy key</span>
+                    <div className="mb-10 text-left">
+                        <div className="bg-white/5 border border-white/10 p-6 rounded-2xl mb-4">
+                            <span className="text-brand font-mono text-xl block truncate">{keyData?.val}</span>
+                            <span className="text-[10px] text-gray-400 font-bold uppercase mt-4 block">Valid Until: {keyData?.expires}</span>
                         </div>
                         <div className="flex gap-3">
-                            <button onClick={saveToSite} className="flex-1 bg-brand text-black font-bold py-3 rounded-xl text-sm">Save key</button>
-                            <button onClick={() => window.location.href='/'} className="flex-1 bg-white/5 border border-white/10 font-bold py-3 rounded-xl text-sm">Close</button>
+                            <button onClick={() => {
+                                const local = JSON.parse(localStorage.getItem('silk_keys') || "[]");
+                                local.push({ key: keyData.val, exp: keyData.timestamp, dateString: keyData.expires });
+                                localStorage.setItem('silk_keys', JSON.stringify(local));
+                                setSavedKeys(local);
+                                alert("Key saved.");
+                            }} className="flex-1 bg-brand text-black font-bold py-3 rounded-xl text-sm">Save key</button>
+                            <button onClick={() => window.location.href='../'} className="flex-1 bg-white/5 border border-white/10 font-bold py-3 rounded-xl text-sm">Close</button>
                         </div>
                     </div>
                 )}
@@ -143,22 +136,19 @@ const CheckpointApp = () => {
                 <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-6">
                     <div className="bg-card border border-white/10 rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
                         <div className="p-6 border-b border-white/5 flex justify-between items-center">
-                            <h3 className="font-bold">Your Saved Keys</h3>
-                            <button onClick={() => setSavedKeysModal(false)} className="text-gray-500 hover:text-white text-2xl">✕</button>
+                            <h3 className="font-bold">Active Keys</h3>
+                            <button onClick={() => setSavedKeysModal(false)} className="text-gray-500 hover:text-white">✕</button>
                         </div>
-                        <div className="p-6 max-h-[400px] overflow-y-auto space-y-4">
-                            {savedKeys.length === 0 ? 
-                                <p className="text-gray-500 text-sm text-center py-4">No keys saved.</p> : 
-                                savedKeys.map((k, i) => (
-                                    <div key={i} className="bg-white/5 p-4 rounded-xl border border-white/5">
-                                        <div className="flex justify-between items-center mb-2">
-                                            <span className="text-brand font-mono text-sm">{k.key}</span>
-                                            <span className="text-brand text-xs font-black tracking-widest"><Timer expiry={k.exp} /></span>
-                                        </div>
-                                        <div className="text-[9px] text-gray-600 font-bold uppercase">Ends: {k.dateString}</div>
+                        <div className="p-6 max-h-[400px] overflow-y-auto space-y-4 text-left">
+                            {savedKeys.map((k, i) => (
+                                <div key={i} className="bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <div className="flex justify-between items-center mb-2">
+                                        <span className="text-brand font-mono text-sm">{k.key}</span>
+                                        <span className="text-brand text-xs font-black"><Timer expiry={k.exp} /></span>
                                     </div>
-                                ))
-                            }
+                                    <div className="text-[9px] text-gray-600 font-bold uppercase">Ends: {k.dateString}</div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
