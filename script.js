@@ -1,10 +1,11 @@
-const { useState, useEffect } = React;
+const { useState, useEffect, useRef } = React;
 
 const App = () => {
     const [loading, setLoading] = useState(true);
     const [scrolled, setScrolled] = useState(false);
     const [word, setWord] = useState('Safe');
     const [mobileMenu, setMobileMenu] = useState(false);
+    const faqRef = useRef(null);
     const [modals, setModals] = useState({
         about: false,
         suggestions: false,
@@ -51,6 +52,12 @@ const App = () => {
         setTimeout(() => toggleModal('thankYou', true), 1500);
     };
 
+    const scrollToFaq = () => {
+        if (faqRef.current) {
+            faqRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     if (loading) {
         return (
             <div className="fixed inset-0 z-[9999] bg-dark flex flex-col items-center justify-center gap-4">
@@ -74,8 +81,8 @@ const App = () => {
                     <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-400">
                         <button onClick={() => toggleModal('about', true)} className="hover:text-white transition-colors">About</button>
                         <button onClick={() => toggleModal('suggestions', true)} className="hover:text-white transition-colors">Suggestions</button>
-                        <button onClick={() => window.location.href='/tos'} className="hover:text-white transition-colors">tos</button>
-                        <button onClick={() => window.location.href='/donation-page'} className="hover:text-white transition-colors">donate to project</button>
+                        <button onClick={() => window.location.href='tos/'} className="hover:text-white transition-colors">tos</button>
+                        <button onClick={() => window.location.href='donation-page/'} className="hover:text-white transition-colors">donate to project</button>
                         <button onClick={() => toggleModal('downloadChoice', true)} className="hover:text-white transition-colors">Download</button>
                         <button onClick={() => window.location.href='checkpoint-1/'} className="bg-white text-black px-5 py-2 rounded-full hover:bg-brand transition-all font-bold">Get Started</button>
                     </div>
@@ -93,8 +100,8 @@ const App = () => {
                     </div>
                     <button onClick={() => toggleModal('about', true)} className="text-left text-gray-400 font-bold hover:text-white">About</button>
                     <button onClick={() => toggleModal('suggestions', true)} className="text-left text-gray-400 font-bold hover:text-white">Suggestions</button>
-                    <button onClick={() => window.location.href='/tos'} className="text-left text-gray-400 font-bold hover:text-white">TOS</button>
-                    <button onClick={() => window.location.href='/donation-page'} className="text-left text-gray-400 font-bold hover:text-white">Donate</button>
+                    <button onClick={() => window.location.href='tos/'} className="text-left text-gray-400 font-bold hover:text-white">TOS</button>
+                    <button onClick={() => window.location.href='donation-page/'} className="text-left text-gray-400 font-bold hover:text-white">Donate</button>
                     <button onClick={() => toggleModal('downloadChoice', true)} className="text-left text-gray-400 font-bold hover:text-white">Download</button>
                     <button onClick={() => window.location.href='checkpoint-1/'} className="bg-brand text-black py-4 rounded-xl font-black mt-auto">Get Started</button>
                 </div>
@@ -120,10 +127,24 @@ const App = () => {
                         <span>Download Silkware</span>
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     </button>
-                    <button onClick={() => document.getElementById('faq').scrollIntoView({behavior:'smooth'})} className="bg-white/5 border border-white/10 font-semibold px-8 py-3.5 rounded-xl hover:bg-white/10 transition-all">
+                    <button onClick={scrollToFaq} className="bg-white/5 border border-white/10 font-semibold px-8 py-3.5 rounded-xl hover:bg-white/10 transition-all">
                         Read FAQ
                     </button>
                 </div>
+
+                <section ref={faqRef} className="mt-40 w-full max-w-3xl hero-animate">
+                    <h2 className="text-3xl font-bold mb-10">Frequently Asked Questions</h2>
+                    <div className="space-y-4 text-left">
+                        <div className="bg-card border border-white/5 rounded-2xl p-6">
+                            <h3 className="font-bold mb-2 text-lg">API Information (sUNC / UNC)</h3>
+                            <p className="text-gray-400 leading-relaxed">We currently use the 95 UNC Based Xeno Module Quorum API. We are planning our own custom API soon for even better performance.</p>
+                        </div>
+                        <div className="bg-card border border-white/5 rounded-2xl p-6">
+                            <h3 className="font-bold mb-2 text-lg">Official Discord Server</h3>
+                            <p className="text-gray-400 leading-relaxed">Join our official community for support and updates: <a href='https://discord.gg/pQpFTTiP' target='_blank' class='text-brand font-bold'>Click to Join</a></p>
+                        </div>
+                    </div>
+                </section>
             </main>
 
             {modals.downloadChoice && (
@@ -148,7 +169,7 @@ const App = () => {
                 <div className="fixed inset-0 z-[210] bg-black/95 flex items-center justify-center p-6">
                     <div className="bg-card border border-white/10 p-8 rounded-3xl max-w-sm w-full text-center">
                         <h3 className="text-2xl font-bold mb-2">Coming soon.</h3>
-                        <p className="text-gray-400 mb-6 text-sm">Silkware executor is being worked on. Our devs are making it safe for you soon.</p>
+                        <p className="text-gray-400 mb-6 text-sm">silkware executor is currently in development. our devs are working hard to bring it to you soon.</p>
                         <button onClick={() => toggleModal('executorSoon', false)} className="bg-brand text-black w-full py-3 rounded-xl font-bold">ok</button>
                     </div>
                 </div>
@@ -160,6 +181,21 @@ const App = () => {
                         <div className="text-brand text-4xl mb-4 flex justify-center">✓</div>
                         <h3 className="text-xl font-bold mb-4">Thank you for downloading silkware.</h3>
                         <button onClick={() => toggleModal('thankYou', false)} className="bg-brand text-black w-full py-3 rounded-xl font-bold">Close</button>
+                    </div>
+                </div>
+            )}
+            
+            {modals.about && (
+                <div className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-6" onClick={() => toggleModal('about', false)}>
+                    <div className="bg-card border border-white/10 p-10 rounded-[40px] max-w-2xl w-full text-left" onClick={e => e.stopPropagation()}>
+                        <h3 className="text-3xl font-black mb-6 tracking-tighter">About Silkware</h3>
+                        <div className="text-gray-400 leading-relaxed space-y-4 text-sm font-medium">
+                            <p>SilkWare is an external Roblox executor designed with performance and stability in mind. It delivers smooth script execution and efficient memory handling for an optimal experience.</p>
+                            <p>What truly sets SilkWare apart is its dedication to being a completely Free and Keyless Executor, ensuring everyone can access its full power without hassle. Its clean and user-friendly interface makes it easy for both beginners and advanced users to enjoy.</p>
+                            <p>With powerful features like multi-attach support, an integrated Online Script Hub, and seamless Online Script Execution, SilkWare provides everything you need in a reliable Roblox utility tool. Regular updates keep it fully compatible with the latest Roblox versions.</p>
+                            <p>Join our Discord community to follow SilkWare’s development, receive updates, and check out the newest changelogs.</p>
+                        </div>
+                        <button onClick={() => toggleModal('about', false)} className="bg-white/10 text-white w-full py-4 rounded-2xl font-bold hover:bg-white/20 mt-8 transition-all">Close</button>
                     </div>
                 </div>
             )}
