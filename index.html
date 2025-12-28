@@ -46,13 +46,14 @@
                     <input type="password" id="reg-password" placeholder="Enter your password">
                 </div>
                 
-                <button class="auth-btn-create" onclick="handleCustomRegister()">Create your account here</button>
+                <button class="auth-btn-create" onclick="handleCustomRegister()">Create Account</button>
                 
                 <div class="auth-divider">
                     <span>OR</span>
                 </div>
                 
                 <button class="auth-btn-puter" onclick="handlePuterLogin()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
                     Login with puter.js
                 </button>
             </div>
@@ -69,8 +70,7 @@
             <div class="nav-links">
                 <button class="nav-item" onclick="showAbout()">About</button>
                 <button class="nav-item" onclick="openSuggestions()">Suggestions</button>
-                <button class="nav-item" onclick="goToCheckpoint()">tos</button>
-                <button class="nav-item" onclick="goToCheckpoint()">donate to project</button>
+                <button class="nav-item" onclick="goToCheckpoint()">Donate</button>
                 <button class="nav-item" onclick="goToCheckpoint()">Download</button>
                 <button class="nav-cta" onclick="goToCheckpoint()">Get Started</button>
             </div>
@@ -86,7 +86,7 @@
         <div class="mobile-menu" id="mobile-menu">
             <button onclick="showAbout()">About</button>
             <button onclick="openSuggestions()">Suggestions</button>
-            <button onclick="goToCheckpoint()">tos</button>
+            <button onclick="goToCheckpoint()">Donate</button>
             <button onclick="goToCheckpoint()">Download</button>
             <button class="mobile-cta" onclick="goToCheckpoint()">Get Started</button>
         </div>
@@ -100,7 +100,7 @@
 
         <section class="hero">
             <h1 class="hero-title">
-                Silkware: The <span id="changing-word" class="highlight-text">Safe</span><br>
+                Silkware: The <span id="changing-word" class="highlight-text">Clean</span><br>
                 Best lua scripting app.
             </h1>
             
@@ -109,14 +109,7 @@
             </p>
 
             <div class="cta-group">
-                <button class="primary-btn" onclick="goToCheckpoint()">
-                    <span>Download Silkware</span>
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                </button>
+                <button class="primary-btn" onclick="goToCheckpoint()">Download Silkware</button>
                 <button class="secondary-btn" onclick="scrollToFaq()">Read FAQ</button>
             </div>
         </section>
@@ -127,23 +120,23 @@
                 <div class="price-card">
                     <h3>3 DAYS</h3>
                     <div class="price">150</div>
-                    <button onclick="goToCheckpoint()">Purchase</button>
+                    <button onclick="goToCheckpoint()">Select</button>
                 </div>
                 <div class="price-card">
                     <h3>1 MONTH</h3>
                     <div class="price">500</div>
-                    <button onclick="goToCheckpoint()">Purchase</button>
+                    <button onclick="goToCheckpoint()">Select</button>
                 </div>
                 <div class="price-card">
                     <h3>3 MONTHS</h3>
-                    <div class="price">800</div>
-                    <button onclick="goToCheckpoint()">Purchase</button>
+                    <div class="price">900</div>
+                    <button onclick="goToCheckpoint()">Select</button>
                 </div>
                 <div class="price-card featured">
                     <h3>LIFETIME</h3>
                     <div class="price">1200</div>
                     <p class="price-note">Can be arranged depending how i feel. - alex.</p>
-                    <button onclick="goToCheckpoint()">Purchase</button>
+                    <button onclick="goToCheckpoint()">Select</button>
                 </div>
             </div>
         </section>
