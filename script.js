@@ -1,8 +1,9 @@
 window.addEventListener('load', function() {
     setTimeout(function() {
         document.getElementById('loading-screen').classList.add('hidden');
-        checkAuth();
     }, 1200);
+
+    checkLoginStatus();
 });
 
 document.addEventListener('mousemove', function(e) {
@@ -22,7 +23,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-var words = ['Safe', 'Reliable', 'Clean', 'Best'];
+var words = ['Safe', 'Stable', 'Smooth', 'Fast'];
 var wordIndex = 0;
 var wordElement = document.getElementById('changing-word');
 
@@ -59,16 +60,12 @@ function showAbout() {
     document.getElementById('about-modal').classList.add('active');
 }
 
-function showSuggestions() {
+function openSuggestions() {
     document.getElementById('suggestions-modal').classList.add('active');
 }
 
 function scrollToFaq() {
     document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });
-}
-
-function scrollToPricing() {
-    document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
 }
 
 function toggleMobileMenu() {
@@ -80,82 +77,78 @@ function toggleMobileMenu() {
     }
 }
 
-var authModal = document.getElementById('auth-modal');
-var errorMsg = document.getElementById('auth-error');
-var authBtn = document.getElementById('custom-auth-btn');
-
-function checkAuth() {
+function checkLoginStatus() {
     var user = localStorage.getItem('silkware_user');
     if (!user) {
-        authModal.classList.add('active');
+        document.getElementById('auth-modal').classList.add('visible');
     }
 }
 
+function showNotification(message) {
+    var container = document.getElementById('notification-area');
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `
+        <svg class="toast-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>${message}</span>
+    `;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('hiding');
+        setTimeout(() => toast.remove(), 500);
+    }, 4000);
+}
+
 function handleCustomRegister() {
-    var userIn = document.getElementById('auth-username').value;
-    var passIn = document.getElementById('auth-password').value;
-    
-    errorMsg.textContent = "";
-    
-    if(userIn.length < 3 || passIn.length < 3) {
-        errorMsg.textContent = "Username/Password too short.";
+    var user = document.getElementById('reg-username').value;
+    var pass = document.getElementById('reg-password').value;
+
+    if (!user || !pass) {
+        alert("Please enter both username and password.");
         return;
     }
 
     var existingUsers = JSON.parse(localStorage.getItem('silkware_users_db') || "[]");
-    
-    if(existingUsers.includes(userIn)) {
-        errorMsg.textContent = "Username already taken.";
+    if (existingUsers.includes(user)) {
+        alert("Username is already taken.");
         return;
     }
 
-    authBtn.classList.add('loading');
-    authBtn.disabled = true;
+    existingUsers.push(user);
+    localStorage.setItem('silkware_users_db', JSON.stringify(existingUsers));
+    localStorage.setItem('silkware_user', user);
 
-    setTimeout(function() {
-        existingUsers.push(userIn);
-        localStorage.setItem('silkware_users_db', JSON.stringify(existingUsers));
-        
-        completeLogin(userIn);
-        
-        authBtn.classList.remove('loading');
-        authBtn.disabled = false;
-    }, 1500);
+    document.getElementById('auth-modal').classList.remove('visible');
+    showNotification(`Account created succesfully. Welcome ${user}.`);
+    
+    fetch('/admin-panel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: user, status: 'created' })
+    }).catch(() => {});
 }
 
 function handlePuterLogin() {
-    if(typeof puter !== 'undefined') {
+    if (typeof puter !== 'undefined') {
         puter.auth.signIn().then(function(user) {
-            completeLogin(user.username || "PuterUser");
+            localStorage.setItem('silkware_user', user.username);
+            document.getElementById('auth-modal').classList.remove('visible');
+            showNotification(`Account created succesfully. Welcome ${user.username}.`);
+            
+            fetch('/admin-panel', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: user.username, type: 'puter' })
+            }).catch(() => {});
+            
+        }).catch(function(err) {
+            console.error(err);
         });
     } else {
-        errorMsg.textContent = "Puter.js not loaded.";
+        alert("Puter.js not loaded.");
     }
-}
-
-function completeLogin(username) {
-    localStorage.setItem('silkware_user', username);
-    authModal.classList.remove('active');
-    
-    showNotification(`Account created successfully. Welcome ${username}.`);
-}
-
-function showNotification(text) {
-    var area = document.getElementById('notification-area');
-    var notif = document.createElement('div');
-    notif.className = 'notification-toast';
-    notif.innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        <span>${text}</span>
-    `;
-    
-    area.appendChild(notif);
-    
-    setTimeout(() => {
-        notif.style.opacity = '0';
-        notif.style.transform = 'translateX(100%)';
-        setTimeout(() => notif.remove(), 400);
-    }, 4000);
 }
