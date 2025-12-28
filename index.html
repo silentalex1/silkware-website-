@@ -26,29 +26,34 @@
     <div id="auth-modal" class="auth-overlay">
         <div class="auth-card">
             <div class="auth-header">
-                <img src="silkwarelogo.png" alt="Logo">
+                <img src="silkwarelogo.png" alt="Logo" class="auth-logo-large">
                 <h2>Welcome to Silkware</h2>
                 <p>Sign in to continue</p>
             </div>
             
             <div class="auth-form">
-                <div class="input-group">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <div class="input-wrapper">
+                    <div class="input-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
                     <input type="text" id="reg-username" placeholder="Enter your username" autocomplete="off">
                 </div>
-                <div class="input-group">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                
+                <div class="input-wrapper">
+                    <div class="input-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    </div>
                     <input type="password" id="reg-password" placeholder="Enter your password">
                 </div>
                 
-                <button class="auth-btn-primary" onclick="handleCustomRegister()">Create your account here</button>
+                <button class="auth-btn-create" onclick="handleCustomRegister()">Create your account here</button>
                 
-                <div class="divider">
+                <div class="auth-divider">
                     <span>OR</span>
                 </div>
                 
                 <button class="auth-btn-puter" onclick="handlePuterLogin()">
-                    <span>Login with puter.js</span>
+                    Login with puter.js
                 </button>
             </div>
         </div>
