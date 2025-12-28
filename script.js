@@ -23,7 +23,7 @@ window.addEventListener('scroll', function() {
     }
 });
 
-var words = ['Safe', 'Stable', 'Smooth', 'Fast'];
+var words = ['Clean', 'Fast', 'Stable', 'Safe'];
 var wordIndex = 0;
 var wordElement = document.getElementById('changing-word');
 
@@ -82,17 +82,6 @@ function checkLoginStatus() {
     if (!user) {
         document.getElementById('auth-modal').classList.add('visible');
     }
-    
-    if(typeof puter !== 'undefined') {
-        puter.auth.isSignedIn().then(function(signedIn) {
-            if(signedIn && !user) {
-                 puter.auth.getUser().then(function(u) {
-                     localStorage.setItem('silkware_user', u.username);
-                     document.getElementById('auth-modal').classList.remove('visible');
-                 });
-            }
-        });
-    }
 }
 
 function showNotification(message) {
@@ -101,8 +90,7 @@ function showNotification(message) {
     toast.className = 'toast';
     toast.innerHTML = `
         <svg class="toast-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            <path d="M20 6L9 17l-5-5"></path>
         </svg>
         <span>${message}</span>
     `;
@@ -115,8 +103,8 @@ function showNotification(message) {
 }
 
 function handleCustomRegister() {
-    var user = document.getElementById('reg-username').value;
-    var pass = document.getElementById('reg-password').value;
+    var user = document.getElementById('reg-username').value.trim();
+    var pass = document.getElementById('reg-password').value.trim();
 
     if (!user || !pass) {
         alert("Please enter both username and password.");
@@ -125,7 +113,9 @@ function handleCustomRegister() {
 
     var usersDb = JSON.parse(localStorage.getItem('silkware_users_db') || "[]");
     
-    if (usersDb.some(u => u.username === user)) {
+    var userExists = usersDb.some(function(u) { return u.username.toLowerCase() === user.toLowerCase(); });
+
+    if (userExists) {
         alert("Username is already taken.");
         return;
     }
@@ -135,13 +125,13 @@ function handleCustomRegister() {
     localStorage.setItem('silkware_user', user);
 
     document.getElementById('auth-modal').classList.remove('visible');
-    showNotification(`Account created succesfully. Welcome ${user}.`);
+    showNotification(`Account created successfully. Welcome ${user}.`);
     
     fetch('/admin-panel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: user, status: 'created', type: 'custom' })
-    }).catch(() => {});
+    }).catch(function() {});
 }
 
 function handlePuterLogin() {
@@ -149,13 +139,13 @@ function handlePuterLogin() {
         puter.auth.signIn().then(function(user) {
             localStorage.setItem('silkware_user', user.username);
             document.getElementById('auth-modal').classList.remove('visible');
-            showNotification(`Account created succesfully. Welcome ${user.username}.`);
+            showNotification(`Account created successfully. Welcome ${user.username}.`);
             
             fetch('/admin-panel', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username: user.username, type: 'puter' })
-            }).catch(() => {});
+            }).catch(function() {});
             
         }).catch(function(err) {
             console.error(err);
