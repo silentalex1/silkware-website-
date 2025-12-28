@@ -82,6 +82,17 @@ function checkLoginStatus() {
     if (!user) {
         document.getElementById('auth-modal').classList.add('visible');
     }
+    
+    if(typeof puter !== 'undefined') {
+        puter.auth.isSignedIn().then(function(signedIn) {
+            if(signedIn && !user) {
+                 puter.auth.getUser().then(function(u) {
+                     localStorage.setItem('silkware_user', u.username);
+                     document.getElementById('auth-modal').classList.remove('visible');
+                 });
+            }
+        });
+    }
 }
 
 function showNotification(message) {
@@ -112,14 +123,15 @@ function handleCustomRegister() {
         return;
     }
 
-    var existingUsers = JSON.parse(localStorage.getItem('silkware_users_db') || "[]");
-    if (existingUsers.includes(user)) {
+    var usersDb = JSON.parse(localStorage.getItem('silkware_users_db') || "[]");
+    
+    if (usersDb.some(u => u.username === user)) {
         alert("Username is already taken.");
         return;
     }
 
-    existingUsers.push(user);
-    localStorage.setItem('silkware_users_db', JSON.stringify(existingUsers));
+    usersDb.push({ username: user, password: pass, created: Date.now() });
+    localStorage.setItem('silkware_users_db', JSON.stringify(usersDb));
     localStorage.setItem('silkware_user', user);
 
     document.getElementById('auth-modal').classList.remove('visible');
@@ -128,7 +140,7 @@ function handleCustomRegister() {
     fetch('/admin-panel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: user, status: 'created' })
+        body: JSON.stringify({ username: user, status: 'created', type: 'custom' })
     }).catch(() => {});
 }
 
