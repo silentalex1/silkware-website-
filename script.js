@@ -154,3 +154,20 @@ function handlePuterLogin() {
         alert("Puter.js not loaded.");
     }
 }
+
+function submitSuggestion() {
+    var modal = document.getElementById('suggestions-modal');
+    var input = modal.querySelector('.modal-input');
+    var area = modal.querySelector('.modal-textarea');
+    
+    if(!input.value || !area.value) {
+        alert("Please fill in all fields.");
+        return;
+    }
+    
+    modal.classList.remove('active');
+    showNotification("Suggestion submitted successfully.");
+    
+    input.value = "";
+    area.value = "";
+}
