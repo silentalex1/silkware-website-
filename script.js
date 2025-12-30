@@ -203,7 +203,7 @@ function toggleSupport() {
 
 function callForHelp() {
     var user = localStorage.getItem('silkware_user') || 'Anonymous';
-    var webhook = "https://discord.com/api/webhooks/1455383870798168127/tCR8H34war5e0ggjEpcJoo6Ql0UVIL0rp9pseXcPt-Zi2VwLf4r4IyxGo-w6LNJHWFzs";
+    var webhook = "https://discord.com/api/webhooks/1455449884143648819/6aBXBuY7CvEV3ppcGYcp1q127sV_2i91UrCOHaQqwUkYAUKshm7-nK0gu20o-do2czbL";
     
     var payload = {
         content: `<@&1455385005999001837> **${user}** has called out for help! Please help them.\n\n-- If the user wastes your time, please take a screenshot and report the user. Use the command "/report", in the <@silkware#4843> bot then follow the directions take care.`
@@ -231,9 +231,15 @@ function sendChatMessage() {
     if(!msg) return;
 
     var user = localStorage.getItem('silkware_user') || 'User';
-    appendMessage("You", msg);
+    var isStaff = user.toLowerCase() === 'realalex';
     
-    var webhook = "https://discord.com/api/webhooks/1455383870798168127/tCR8H34war5e0ggjEpcJoo6Ql0UVIL0rp9pseXcPt-Zi2VwLf4r4IyxGo-w6LNJHWFzs";
+    if(isStaff) {
+        appendMessage("Staff", msg);
+    } else {
+        appendMessage("You", msg);
+    }
+    
+    var webhook = "https://discord.com/api/webhooks/1455449884143648819/6aBXBuY7CvEV3ppcGYcp1q127sV_2i91UrCOHaQqwUkYAUKshm7-nK0gu20o-do2czbL";
     fetch(webhook, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
