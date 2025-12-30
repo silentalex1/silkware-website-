@@ -44,12 +44,13 @@ setInterval(changeWord, 3000);
 
 function toggleFaq(item) {
     var allItems = document.querySelectorAll('.faq-item');
-    if (item.classList.contains('active')) {
+    
+    if(item.classList.contains('active')) {
         item.classList.remove('active');
-        return;
+    } else {
+        allItems.forEach(function(i) { i.classList.remove('active'); });
+        item.classList.add('active');
     }
-    allItems.forEach(function(i) { i.classList.remove('active'); });
-    item.classList.add('active');
 }
 
 function goToCheckpoint() {
@@ -120,7 +121,16 @@ function handleCustomRegister() {
         return;
     }
 
-    usersDb.push({ username: user, password: pass, created: Date.now() });
+    var newId = 'silk-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    
+    usersDb.push({ 
+        id: newId,
+        username: user, 
+        password: pass, 
+        created_at: new Date().toISOString(),
+        last_login: new Date().toISOString()
+    });
+    
     localStorage.setItem('silkware_users_db', JSON.stringify(usersDb));
     localStorage.setItem('silkware_user', user);
 
@@ -130,7 +140,13 @@ function handleCustomRegister() {
     fetch('/admin-panel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: user, status: 'created', type: 'custom' })
+        body: JSON.stringify({ 
+            id: newId,
+            username: user, 
+            status: 'created', 
+            type: 'custom',
+            timestamp: new Date().toISOString()
+        })
     }).catch(function() {});
 }
 
