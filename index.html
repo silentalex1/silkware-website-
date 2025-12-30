@@ -167,18 +167,39 @@
     </div>
 
     <div id="about-modal" class="modal" onclick="this.classList.remove('active')">
-        <div class="modal-card" onclick="event.stopPropagation()">
-            <h3>About Silkware</h3>
-            <p>Section In Development. This part of the website is currently being worked on for a future update.</p>
-            <button class="close-btn" onclick="document.getElementById('about-modal').classList.remove('active')">Close</button>
+        <div class="modal-card enhanced-modal" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <h3>About Silkware</h3>
+                <button class="icon-close-btn" onclick="document.getElementById('about-modal').classList.remove('active')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body-text">
+                <p>SilkWare is an external Roblox executor designed with performance and stability in mind. It delivers smooth script execution and efficient memory handling for an optimal experience.</p>
+                <p>What truly sets SilkWare apart is its dedication to being a completely Free and Keyless Executor, ensuring everyone can access its full power without hassle. Its clean and user-friendly interface makes it easy for both beginners and advanced users to enjoy.</p>
+                <p>With powerful features like multi-attach support, an integrated Online Script Hub, and seamless Online Script Execution, SilkWare provides everything you need in a reliable Roblox utility tool. Regular updates keep it fully compatible with the latest Roblox versions.</p>
+                <p>Join our Discord community to follow SilkWare’s development, receive updates, and check out the newest changelogs.</p>
+            </div>
         </div>
     </div>
 
     <div id="suggestions-modal" class="modal" onclick="this.classList.remove('active')">
-        <div class="modal-card" onclick="event.stopPropagation()">
-            <h3>Suggestions</h3>
-            <p>We value your feedback. Please join our Discord server to submit suggestions directly to the developers.</p>
-            <button class="close-btn" onclick="window.open('https://discord.gg/pQpFTTiP', '_blank')">Join Discord</button>
+        <div class="modal-card enhanced-modal" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <h3>Suggestions</h3>
+                <button class="icon-close-btn" onclick="document.getElementById('suggestions-modal').classList.remove('active')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-form">
+                <label>Enter your discord username:</label>
+                <input type="text" class="modal-input" placeholder="Enter username">
+                
+                <label>Enter your suggestion for our dev team to improve our executor :)</label>
+                <textarea class="modal-textarea" placeholder="Type your suggestion here..."></textarea>
+                
+                <button class="submit-suggestion-btn" onclick="submitSuggestion()">Submit suggestion.</button>
+            </div>
         </div>
     </div>
 
